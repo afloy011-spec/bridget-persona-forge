@@ -1,0 +1,950 @@
+{
+ "id": "841aaa91-99cf-530a-9965-801c28ddf81d",
+ "revision": 0,
+ "last_node_id": 95,
+ "last_link_id": 16,
+ "nodes": [
+  {
+   "id": 90,
+   "type": "Note",
+   "title": "Что проверяем",
+   "pos": [
+    80,
+    40
+   ],
+   "size": [
+    460,
+    330
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "properties": {
+    "text": ""
+   },
+   "widgets_values": [
+    "1. Подхватились ли модели — если нода красная или\nпустой выпадающий список, модели на сервере нет.\n\n2. ЧТО ДАЁТ ПЕРСОНАЖНАЯ ЛОРА. Она стоит ПЕРВОЙ в цепочке и отвечает на\nвопрос «кто в кадре»; реализм-лоры после неё — на вопрос «как снято».\nОбнули её силу и прогони тот же сид: лицо уплывёт к типажу. Замер на чистом\nt2i без референса — косинус 0.642 к эталону.\n\n3. Кожа и возраст. Смотреть на шею, кисти и зону у глаз — именно там\nмодель сползает к 27 годам, лицо крупным планом обманывает.\n\n4. Кадр целиком до всякой автоматики: композиция, свет, руки."
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 91,
+   "type": "Note",
+   "title": "Референс больше не нужен",
+   "pos": [
+    600,
+    40
+   ],
+   "size": [
+    460,
+    330
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "properties": {
+    "text": ""
+   },
+   "widgets_values": [
+    "Личность лежит В ВЕСАХ лоры, а не в\nкартинке. Раньше кадр переснимался с референса эдит-графом, потом лицо\nвклеивалось свапом — и своп уничтожал 78% фактуры лица (замер на 14 парах:\nдисперсия лапласиана 180 → 40, на КАЖДОМ кадре от -53% до -87%).\n\nСвап убран, эдит для съёмки не нужен: этот граф — обычный t2i, и он же\nтеперь боевой путь. Триггер лоры стоит в начале промпта."
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 92,
+   "type": "Note",
+   "title": "Почему нет негативного промпта",
+   "pos": [
+    1120,
+    40
+   ],
+   "size": [
+    460,
+    330
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "properties": {
+    "text": ""
+   },
+   "widgets_values": [
+    "Модель работает на cfg = 1.0, а при\ncfg = 1.0 негативный обусловливатель не влияет на результат ВООБЩЕ.\nConditioningZeroOut стоит только потому, что граф требует вход negative.\n\nПисать «no plastic skin» бессмысленно. Всё нежелательное выражается\nположительным требованием прямо в промпте: не «без пластиковой кожи», а\n«visible skin pores». Это уже сделано в character.json → realism_clause."
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 93,
+   "type": "Note",
+   "title": "Сейвы выключены намеренно",
+   "pos": [
+    1640,
+    40
+   ],
+   "size": [
+    460,
+    330
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "properties": {
+    "text": ""
+   },
+   "widgets_values": [
+    "Основной выход — PreviewImage: кадр падает\nв temp/ и чистится при рестарте ComfyUI.\n\nSaveImage рядом выключен (mode = Never). Машина общая: воркфлоу, который\nпишет в output/ по умолчанию, за неделю набивает туда сотни тестовых PNG,\nа удалить их по API нечем.\n\nНужен файл — включи SaveImage руками и выключи обратно."
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 94,
+   "type": "Note",
+   "title": "Afloy Lora Box",
+   "pos": [
+    2160,
+    40
+   ],
+   "size": [
+    460,
+    330
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "properties": {
+    "text": ""
+   },
+   "widgets_values": [
+    "Весь стек лор — одна нода: список в её панели, у\nкаждой лоры своя сила и выключатель, триггер-слова подмешиваются в промпт\nсама. Персонажная первой строкой.\n\nЭТО БОЕВОЙ ПУТЬ, А НЕ УДОБСТВО ДЛЯ ГЛАЗ, и решение по замеру. Цепочка\nLoraLoaderModelOnly кладёт лоры только на модель, Lora Box — ещё и на CLIP.\nСравнение на восьми ячейках при одних сидах:\n    фактура лица   232 -> 274  (лучше в 7 кадрах из 8)\n    волосы         0.599 -> 0.542 (лучше в 8 из 8)\n    сходство       0.611 -> 0.591 (знак неустойчив: лучше в 3 из 8)\nВыигрыш ровно по двум оставшимся долгам проекта, и он систематичен.\n\nПлата названа вслух: нода кастомная (ComfyUI-LoraBox), на чистом ComfyUI её\nнет, и генерация перестала быть переносимой. Ключ --chain собирает прежний\nвариант с цепочкой — для сверки и для машины без этой ноды."
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 95,
+   "type": "Note",
+   "title": "Доводка после съёмки",
+   "pos": [
+    2680,
+    40
+   ],
+   "size": [
+    460,
+    330
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "properties": {
+    "text": ""
+   },
+   "widgets_values": [
+    "Справа стоит ВТОРАЯ половина конвейера, и она\nвключена не всегда — это ручная проверка, а не батч.\n\nУВЕЛИЧЕНИЕ: ESRGAN x4, затем ImageScaleBy 0.5 — итого ровно x2. Апскейлер\nдаёт разрешение и структуру, но придумать не умеет ничего.\n\nФАКТУРА: её кладёт отдельный проход В МАСШТАБЕ ЛИЦА (scripts/detail_face.py),\nи в этом графе его НЕТ намеренно — он режет кроп вокруг лица по детектору,\nгонит его на холсте 1024 и вклеивает обратно с растушёвкой, а детектора лиц\nв нодах ComfyUI нет. Почему в масштабе лица: диффузия рисует детали в\nмасштабе ХОЛСТА, а лицу при съёмке достаётся 72-161 px межзрачкового, и поры\nему рисовать негде. Замер на кропе: 52.7 -> 71.3 против 5.3 -> 11.5 у прохода\nпо всему кадру."
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 1,
+   "type": "UNETLoader",
+   "title": "Base model",
+   "pos": [
+    110,
+    584
+   ],
+   "size": [
+    400,
+    106
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "krea2_turbo_fp8_scaled.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 2,
+   "type": "CLIPLoader",
+   "title": "Text encoder",
+   "pos": [
+    110,
+    770
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      4
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen3vl_4b_fp8_scaled.safetensors",
+    "krea2",
+    "default"
+   ]
+  },
+  {
+   "id": 3,
+   "type": "VAELoader",
+   "title": "VAE",
+   "pos": [
+    110,
+    980
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      10
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "qwen_image_vae.safetensors"
+   ]
+  },
+  {
+   "id": 20,
+   "type": "LoraBox",
+   "title": "Afloy Lora Box — character first",
+   "pos": [
+    630,
+    584
+   ],
+   "size": [
+    460,
+    300
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    },
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      3
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      4
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "prompt",
+     "type": "STRING",
+     "links": [],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraBox"
+   },
+   "widgets_values": [
+    "{\"v\": 1, \"mute\": false, \"pos\": \"beginning\", \"delim\": \", \", \"rows\": [{\"on\": true, \"name\": \"bridget_char_v2_000002500.safetensors\", \"sm\": 1.0, \"sc\": 1.0}, {\"on\": true, \"name\": \"krea2_realism_lora.safetensors\", \"sm\": 0.65, \"sc\": 0.65}, {\"on\": true, \"name\": \"RealisticSnapshotKrea2.safetensors\", \"sm\": 0.45, \"sc\": 0.45}, {\"on\": true, \"name\": \"purelens_krea2.safetensors\", \"sm\": 0.9, \"sc\": 0.9}, {\"on\": true, \"name\": \"k2_amateur_slider.safetensors\", \"sm\": 0.35, \"sc\": 0.35}, {\"on\": true, \"name\": \"k2_disposable_camera.safetensors\", \"sm\": 0.8, \"sc\": 0.8}]}"
+   ]
+  },
+  {
+   "id": 4,
+   "type": "CLIPTextEncode",
+   "title": "PROMPT — from prompts.py",
+   "pos": [
+    1210,
+    584
+   ],
+   "size": [
+    480,
+    320
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 4
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      5,
+      6
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    "brdgt_w, a candid photograph of a real woman, shot on film-like digital, not a render, not an illustration, not a 3D character, chest-up portrait, she fills the frame, direct eye contact with the lens, chin slightly lowered, a half-smile, a 51-year-old woman, long layered warm mid-brown hair with multi-tonal salon balayage lightening through the lengths to sun-blonde ends, green-hazel eyes, high cheekbones with mild volume loss beneath them, a straight nose with a slightly rounded tip, thin upper lip and fuller lower lip, one eyebrow set marginally higher than the other, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, thinner vermilion of the upper lip, scattered grey strands at the temples and along the parting, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, hair long enough to reach mid-back when loose, an even warm mid-brown from the parting down through the lengths, lightening to sun-blonde only in the last third and at the ends, never platinum and never one flat tone, an ivory silk blouse, one button open, the same jewellery in every frame: a narrow gold bangle and a slim gold watch on her right wrist, small thin gold hoop earrings, at home by a large window, the room behind her thrown out of focus into warm neutral tones, soft north-facing window light from camera left, a gentle falloff into deep shadow on the right side of her face, the shadow side left dark and unlifted, 85mm at f/2, eye level, focus locked on the near eye, eye contact held a beat too long, chin slightly down, visible skin pores and fine facial texture, uneven natural skin tone with faint redness around the nose and chin, a few flyaway hairs catching the light, fabric with real creases and pressure folds, slight optical softness toward the frame corners, natural unretouched skin, full natural colour, warm skin tones against cooler ambient light, a woman clearly in her early fifties, mature and unaltered"
+   ]
+  },
+  {
+   "id": 5,
+   "type": "ConditioningZeroOut",
+   "title": "Negative is dead at cfg 1.0",
+   "pos": [
+    1210,
+    984
+   ],
+   "size": [
+    480,
+    60
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 6
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      7
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ConditioningZeroOut"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 6,
+   "type": "EmptyLatentImage",
+   "title": "Frame 1152x1440",
+   "pos": [
+    1810,
+    584
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      8
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptyLatentImage"
+   },
+   "widgets_values": [
+    1152,
+    1440,
+    1
+   ]
+  },
+  {
+   "id": 7,
+   "type": "KSampler",
+   "title": "Sampler",
+   "pos": [
+    1810,
+    794
+   ],
+   "size": [
+    400,
+    290
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 3
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 5
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 7
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 8
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      9
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    101,
+    "fixed",
+    8,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ]
+  },
+  {
+   "id": 8,
+   "type": "VAEDecode",
+   "title": "",
+   "pos": [
+    2330,
+    584
+   ],
+   "size": [
+    400,
+    60
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 9
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 10
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      11,
+      12,
+      13
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 9,
+   "type": "PreviewImage",
+   "title": "Preview — as shot",
+   "pos": [
+    2330,
+    724
+   ],
+   "size": [
+    400,
+    300
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 11
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 10,
+   "type": "SaveImage",
+   "title": "Save — OFF on purpose",
+   "pos": [
+    2330,
+    1104
+   ],
+   "size": [
+    400,
+    320
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 2,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 12
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "persona-forge/manual"
+   ]
+  },
+  {
+   "id": 11,
+   "type": "UpscaleModelLoader",
+   "title": "",
+   "pos": [
+    2850,
+    584
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "flags": {},
+   "order": 17,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "UPSCALE_MODEL",
+     "type": "UPSCALE_MODEL",
+     "links": [
+      14
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UpscaleModelLoader"
+   },
+   "widgets_values": [
+    "4x_foolhardy_Remacri.safetensors"
+   ]
+  },
+  {
+   "id": 12,
+   "type": "ImageUpscaleWithModel",
+   "title": "ESRGAN x4",
+   "pos": [
+    2850,
+    746
+   ],
+   "size": [
+    400,
+    60
+   ],
+   "flags": {},
+   "order": 18,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "upscale_model",
+     "type": "UPSCALE_MODEL",
+     "link": 14
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 13
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      15
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageUpscaleWithModel"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 13,
+   "type": "ImageScaleBy",
+   "title": "0.5 — net x2",
+   "pos": [
+    2850,
+    886
+   ],
+   "size": [
+    400,
+    106
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 15
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      16
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScaleBy"
+   },
+   "widgets_values": [
+    "lanczos",
+    0.5
+   ]
+  },
+  {
+   "id": 14,
+   "type": "PreviewImage",
+   "title": "Preview — after upscale",
+   "pos": [
+    2850,
+    1072
+   ],
+   "size": [
+    400,
+    300
+   ],
+   "flags": {},
+   "order": 20,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 16
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": []
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   20,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   2,
+   0,
+   20,
+   1,
+   "CLIP"
+  ],
+  [
+   3,
+   20,
+   0,
+   7,
+   0,
+   "MODEL"
+  ],
+  [
+   4,
+   20,
+   1,
+   4,
+   0,
+   "CLIP"
+  ],
+  [
+   5,
+   4,
+   0,
+   7,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   6,
+   4,
+   0,
+   5,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   7,
+   5,
+   0,
+   7,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   8,
+   6,
+   0,
+   7,
+   3,
+   "LATENT"
+  ],
+  [
+   9,
+   7,
+   0,
+   8,
+   0,
+   "LATENT"
+  ],
+  [
+   10,
+   3,
+   0,
+   8,
+   1,
+   "VAE"
+  ],
+  [
+   11,
+   8,
+   0,
+   9,
+   0,
+   "IMAGE"
+  ],
+  [
+   12,
+   8,
+   0,
+   10,
+   0,
+   "IMAGE"
+  ],
+  [
+   13,
+   8,
+   0,
+   12,
+   1,
+   "IMAGE"
+  ],
+  [
+   14,
+   11,
+   0,
+   12,
+   0,
+   "UPSCALE_MODEL"
+  ],
+  [
+   15,
+   12,
+   0,
+   13,
+   0,
+   "IMAGE"
+  ],
+  [
+   16,
+   13,
+   0,
+   14,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "MODELS",
+   "bounding": [
+    80,
+    490,
+    460,
+    602
+   ],
+   "color": "#b58b2a",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "LORAS — CHARACTER FIRST",
+   "bounding": [
+    600,
+    490,
+    520,
+    424
+   ],
+   "color": "#2a8b4f",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "PROMPT",
+   "bounding": [
+    1180,
+    490,
+    540,
+    584
+   ],
+   "color": "#3f789e",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "SAMPLE",
+   "bounding": [
+    1780,
+    490,
+    460,
+    624
+   ],
+   "color": "#b06634",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "OUTPUT",
+   "bounding": [
+    2300,
+    490,
+    460,
+    964
+   ],
+   "color": "#8AA",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 6,
+   "title": "FINISHING",
+   "bounding": [
+    2820,
+    490,
+    460,
+    912
+   ],
+   "color": "#b06634",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.55,
+   "offset": [
+    0,
+    0
+   ]
+  }
+ },
+ "version": 0.4
+}

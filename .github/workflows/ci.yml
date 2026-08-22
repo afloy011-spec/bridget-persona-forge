@@ -1,0 +1,83 @@
+# Проверка репозитория. Ни ComfyUI, ни моделей, ни сети: ответ сервера
+# подставляется заглушкой.
+#
+# ЧТО СТАВИТСЯ: numpy, Pillow, opencv-python-headless — без них поведенческие
+# тесты сдачи падают с ModuleNotFoundError.
+# ЧТО НЕ СТАВИТСЯ: insightface и onnxruntime — они тянут ~300 МБ моделей при
+# первом вызове.
+# ЧТО ИЗ ЭТОГО СЛЕДУЕТ, И ЭТО НАДО ЗНАТЬ: ворота идентичности, возраста и
+# отбор набора здесь НЕ ПРОВЕРЯЮТСЯ ВООБЩЕ. Не «пропускаются по
+# importorskip» — таких тестов просто нет. Зелёная галка их не покрывает.
+name: ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements-dev.txt
+      # НАБОР ПРАВИЛ ВЫБРАН, А НЕ ВЗЯТ ПО УМОЛЧАНИЮ. E9 — синтаксис и то, что
+      # не запустится; F — pyflakes: необъявленные имена, мёртвые импорты,
+      # сломанные f-строки. Правила оформления (E4/E7/I001) выключены
+      # намеренно: домашний стиль этого репозитория — компактные `import json,
+      # os, sys` и содержательные комментарии, и линтер, который требует их
+      # переписать, лечит не ту болезнь.
+      - run: ruff check --select E9,F --target-version py39 .
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.9", "3.12"]
+    runs-on: ${{ matrix.os }}
+    env:
+      # Русская Windows отдаёт консоли cp1251, и первый же «décolleté» в
+      # промпте роняет прогон на печати.
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
+      # Заведомо мёртвый адрес. Если какой-нибудь тест всё же полезет в сеть,
+      # он должен упасть здесь, а не постучаться в чей-то настоящий ComfyUI.
+      COMFY_HOST: http://127.0.0.1:9
+      # Тот же мёртвый адрес для AI Toolkit. Тесты его и так задают сами
+      # (tests/test_lora_pipeline.py), это второй рубеж: ни один будущий тест
+      # не должен уметь постучаться в живую машину автора.
+      AITK_HOST: http://127.0.0.1:9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      # РАБОЧАЯ ПАПКА ЗАДАЁТСЯ ШАГОМ, А НЕ БЛОКОМ env САМОЙ ЗАДАЧИ. В
+      # манифесте лежит абсолютный windows-путь, и без подмены тест,
+      # тронувший work_dir(), завёл бы каталог «D:» в рабочей копии. Но
+      # контекст runner на уровне job НЕ СУЩЕСТВУЕТ — там разрешены только
+      # github, needs, strategy, matrix, vars, secrets, inputs, — и GitHub
+      # отвергал весь файл ДО создания задач: прогон завершался за 0 секунд
+      # с «workflow file issue» и без единой задачи. То есть проверка,
+      # которую репозиторий обещает, не выполнялась НИ РАЗУ.
+      - run: echo "PERSONA_WORK_ROOT=${{ runner.temp }}/persona-forge-work" >> "$GITHUB_ENV"
+        shell: bash
+      # Подмножество requirements.txt — см. шапку файла. Прежняя редакция
+      # ставила один pytest, объясняя это тем, что «рантайм конвейера —
+      # стандартная библиотека»; это неверно, и поведенческие тесты сдачи
+      # падали здесь с ModuleNotFoundError: PIL при зелёном локальном прогоне.
+      # Список инструментов проверки — ОДНИМ ФАЙЛОМ, а не перечислением здесь.
+      # Ручной список расходился с requirements-dev.txt молча: pyyaml стоял
+      # локально и отсутствовал в раннере, отчего тест, разбирающий ЭТОТ файл,
+      # пропускался в каждом прогоне.
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pip install numpy Pillow opencv-python-headless
+      - run: python -m pytest

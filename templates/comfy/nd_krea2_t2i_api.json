@@ -1,0 +1,57 @@
+{
+  "_": "Схема чужого воркфлоу ND_Krea2_Ultimate_TI2I v1.1, вынутая из подграфов. Стенд для проверки его настроек, а не сам воркфлоу.",
+
+  "_why": "В исходном UI-графе автора 37 нод и 33 подграфа, где 19 нод из 59 — приведения типов и переключатели: это органы управления для человека, а не генерация. Собственно генерация в нём — четыре числа, и именно они здесь и проверяются. Плюмбинг воспроизводить незачем: он не влияет на пиксели.",
+
+  "_claim": "ГЛАВНОЕ УТВЕРЖДЕНИЕ ЧУЖОГО ВОРКФЛОУ: krea2 turbo идёт на cfg 8.0 при 20 шагах, и негативный промпт у него ЖИВОЙ (в графе он непустой: messy hair, moles, baby face, teen, strawberry skin, acne, JPEG artifacts). Это прямо противоречит нашей конструкции, где cfg=1.0, негатив мёртв и все запреты переписаны в положительные требования (forbidden_as_positive). Оба варианта не могут быть верны — проверяется одним прогоном.",
+
+  "_refiner": "ВТОРАЯ ИДЕЯ, РАДИ КОТОРОЙ СТОИЛО СМОТРЕТЬ: увеличение не апскейлером, а самой моделью. decode -> bicubic x2 -> encode -> KSampler 4 шага denoise 0.3 -> ColorMatchV2 обратно к доувеличенному кадру. У нас на этом месте стоит ESRGAN, и заказчик дважды сказал про рябь: свёрточный апскейлер дорисовывает проволочные волосы, потому что он резкость наводит, а не детали придумывает. Диффузионный проход детали именно придумывает, а ColorMatch не даёт ему увести грейд.",
+
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {"unet_name": "krea2_turbo_fp8_scaled.safetensors", "weight_dtype": "default"}
+  },
+  "2": {"class_type": "CLIPLoader", "inputs": {"clip_name": "qwen3vl_4b_fp8_scaled.safetensors", "type": "krea2"}},
+  "3": {"class_type": "VAELoader", "inputs": {"vae_name": "qwen_image_vae.safetensors"}},
+
+  "10": {
+    "_": "Сдвиг сигм. У автора 3.7 в t2i и 4.0 в ветке с референсом. Пропускать нельзя: при shift=1 те же шаги дают другую картинку.",
+    "class_type": "ModelSamplingAuraFlow",
+    "inputs": {"model": ["1", 0], "shift": 3.7}
+  },
+
+  "4": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["2", 0], "text": "REPLACED_BY_SCRIPT"}},
+  "5": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["2", 0], "text": ""}},
+
+  "6": {"class_type": "EmptyLatentImage", "inputs": {"width": 896, "height": 1152, "batch_size": 1}},
+
+  "7": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["10", 0], "positive": ["4", 0], "negative": ["5", 0],
+      "latent_image": ["6", 0], "seed": 0, "steps": 20, "cfg": 8.0,
+      "sampler_name": "er_sde", "scheduler": "simple", "denoise": 1.0
+    }
+  },
+  "8": {"class_type": "VAEDecode", "inputs": {"samples": ["7", 0], "vae": ["3", 0]}},
+
+  "11": {"class_type": "ImageScaleBy", "inputs": {"image": ["8", 0], "upscale_method": "bicubic", "scale_by": 2.0}},
+  "12": {"class_type": "VAEEncode", "inputs": {"pixels": ["11", 0], "vae": ["3", 0]}},
+  "13": {
+    "_": "Финальная ступень автора: 4 шага, cfg 1, denoise 0.3. Малый denoise правит фактуру и не трогает композицию.",
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["10", 0], "positive": ["4", 0], "negative": ["5", 0],
+      "latent_image": ["12", 0], "seed": 42, "steps": 4, "cfg": 1.0,
+      "sampler_name": "exp_heun_2_x0_sde", "scheduler": "linear_quadratic", "denoise": 0.3
+    }
+  },
+  "14": {"class_type": "VAEDecode", "inputs": {"samples": ["13", 0], "vae": ["3", 0]}},
+  "15": {
+    "_": "Эталон — увеличенный бикубикой кадр ДО дорисовки: рефайнер возвращает фактуру, но не имеет права менять цвет.",
+    "class_type": "ColorMatchV2",
+    "inputs": {"image_target": ["14", 0], "image_ref": ["11", 0], "method": "mkl", "strength": 0.85, "multithread": true}
+  },
+
+  "9": {"class_type": "SaveImage", "inputs": {"images": ["8", 0], "filename_prefix": "nd"}}
+}

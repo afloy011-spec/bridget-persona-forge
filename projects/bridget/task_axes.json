@@ -1,0 +1,109 @@
+{
+ "_": "Сетка ПОД СДАЧУ тестового задания. Десять клеток: пять профильных (P) и история из пяти (S). Каждая несёт свой кусок брифа — см. ключ _.",
+ "_brief": "Бриф даёт ТОЛЬКО ТЕКСТ, референса персонажа в нём нет. Отсюда главное следствие: требование «персонаж выглядит одинаково на всех кадрах» — про согласованность десяти кадров МЕЖДУ СОБОЙ, а не про совпадение с нашим листом. Пересадка лица даёт ровно это.",
+ "_optics": "ТРИ НОСИТЕЛЯ ВМЕСТО ОДНОГО, И ЭТО ГЛАВНАЯ ПРАВКА РЕДАКЦИИ 2. Первая редакция снимала все десять кадров одной камерой — полный кадр, светосильный фикс, — и именно однородность съёмки сама по себе читается как генерация: у настоящего человека в профиле лежит смесь. Стало: телефон (шесть кадров), компакт с матовым светом (два), полный кадр (один), плюс телефон партнёра по корту. Носитель описан признаками, а не названием модели: слово «iPhone» модель знает, но рисует по широкому углу, поднятым теням, плоскому контрасту и заваленному на градус горизонту.\nВСЯ ВТОРАЯ ЧАСТЬ СНЯТА ТЕЛЕФОНОМ, и это не стиль, а сюжет: по брифу она сама шлёт эти кадры парню. Чужая камера в спальне сломала бы историю.\nМАТОВЫЙ РОВНЫЙ СВЕТ БЕЗ БЛИКОВ — замеренная цель заказчика: «красиво» у него именно так, а не вспышкой. Отсюда два кадра компактом (P1, P4), и оба формулируют это требованием, а не запретом: при cfg 1.0 негатив не действует.",
+ "_part2": "Бриф просит три эротических кадра и два ню. Арка сохранена целиком — от полностью одетой до душа ночью, — но сделана намёком: шёлковый халат, приспущенное плечо, силуэт за запотевшим стеклом, полотенце после душа. Обязательное селфи в зеркале с видимым телефоном — S2.",
+ "_poses": "Позы разведены нарочно: плечом к раме окна, хохот с запрокинутой головой, сидя по-турецки лбом к собаке, подбородок на тыльной стороне ладони, шаг через дорогу с рукой в волосах, колени к себе у изголовья, бедро вбок у зеркала, со спины через плечо, силуэт за стеклом, колено к себе на краю ванны. Ни одна не повторяется.",
+ "_tattoo": "Тату просят только две клетки, P2 и S2, и обе снимаются в 1536x1920. Замерено: надпись в 75 мм это 1.19 межзрачкового, а ниже 153 px чернило усредняется с кожей и читается грязью. На 1024 выходит 143 px, на 1280 — 119-151, и первый прогон отказал шесть раз подряд, причём один кадр не дотянул ДВА ПИКСЕЛЯ (151 при 153). Порог считается по самому ассету и двигать его руками нельзя — двигать надо кадрирование.",
+ "seeds_per_cell": 4,
+ "base": "a candid photograph of the same woman as in the reference, a 51-year-old woman with long layered warm mid-brown hair lightening to sun-blonde ends, green-hazel eyes, thin upper lip and fuller lower lip, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, scattered grey strands at the temples and along the parting, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, a woman clearly in her early fifties, mature and unaltered",
+ "cells": [
+  {
+   "id": "P1",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "_optics": "G7X",
+   "_": "Её лучший кадр — тот, что она сама поставила бы первым. Матовый ровный свет без бликов: это замеренная цель заказчика, «красиво» у него именно так, а не вспышкой.",
+   "prompt": "chest-up portrait by a window, she leans one shoulder against the frame with her arms loosely folded, head tipped slightly toward the glass, direct eye contact held a beat too long, a half-smile rather than a full one, soft even overcast light from the whole window with no hotspots on her skin, the room behind her quiet and neutral, wearing an ivory silk blouse with one button open, small thin gold hoops, shot on a small 1-inch compact at f/2, soft even matte light with no specular highlights anywhere on her skin, gentle separation from the background rather than heavy blur, clean neutral colour, natural perspective at eye level"
+  },
+  {
+   "id": "P2",
+   "plan": "half",
+   "w": 1536,
+   "h": 1920,
+   "tattoo_visible": true,
+   "_optics": "телефон, снял партнёр по корту",
+   "_": "Падл-теннис из брифа. Поза на скамейке с предплечьями на бёдрах вышла неловкой и всё равно давала ладонную сторону (28-33%), поэтому вернулась стоя — но не с замахом, а в паузе: она опирается на сетку, и это читается как живой момент.",
+   "prompt": "standing at the net between games with one forearm resting along the top of the net cord and her weight on one hip, the racket hanging from her other hand, half-turned toward the camera and laughing at something said off frame, a short-sleeved charcoal technical top, hair tied back with strands escaping and stuck to her temple, bright flat overcast daylight, green court and dark fencing behind her, shot on a phone by a friend standing a few steps away, handheld and slightly crooked, wide main camera, deep depth of field with the background sharp, smart HDR flattening the contrast"
+  },
+  {
+   "id": "P3",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "_optics": "телефон, с пола",
+   "_": "Животные из брифа. Прежняя редакция снимала её сверху склонённой к собаке — лицо уходило вниз и в тень, сходство падало до 0.758, худшего в сдаче. Теперь она сидит с собакой рядом и смотрит в камеру: собака остаётся, лицо возвращается.",
+   "prompt": "sitting on a living room rug with her back against the sofa and an old grey greyhound stretched out with its head in her lap, one hand resting on the dog's neck, she looks up into the camera with a quiet unguarded smile, warm lamp light from a standing lamp beside them and blue evening light in the window beyond, wearing a soft oversized grey cashmere jumper and no jewellery, hair loose and unstyled, shot on a phone at arm's length on the wide main camera, mild wide-angle stretch at the edges, everything reasonably sharp with no creamy background blur, smart HDR holding the windows and lifting the shadows so contrast is a little flat, faint over-sharpening halos, the horizon a degree or two off level"
+  },
+  {
+   "id": "P4",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "_optics": "G7X",
+   "_": "Единственный кадр, где она НЕ встречает объектив: бриф говорит про груз прошлых отношений и проблемы с доверием, и это ставится отведённым взглядом, а не выражением лица.",
+   "prompt": "from the chest up at a restaurant table in the evening, one elbow on the table and her chin resting on the back of her hand, leaning slightly away from someone out of frame, her attention elsewhere and caught mid-thought rather than posing, warm even restaurant light with no hard highlights on her skin, out of focus lamps behind her, wearing a deep wine silk slip dress and small gold hoops, shot on a small 1-inch compact at f/2, soft even matte light with no specular highlights anywhere on her skin, gentle separation from the background rather than heavy blur, clean neutral colour, natural perspective at eye level"
+  },
+  {
+   "id": "P5",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "_optics": "полный кадр, 50 мм",
+   "_": "Требование брифа «подтянутая стильная фигура, модная одежда» — единственный кадр в рост и единственный, снятый настоящей камерой с расстояния. Идёт, а не позирует.",
+   "prompt": "the whole standing figure crossing a city street in the late afternoon, mid-stride with her coat swinging open and one hand pushing hair off her face, low sun raking from the side and long shadows on the tarmac, wearing a long camel wool coat over a dark slip dress and pointed-toe stiletto pumps, a slim leather bag over her shoulder, looking ahead past the camera and unaware of it, shot on a full-frame camera with an 85mm lens at f/2, shallow but not extreme depth of field, focus locked on the near eye"
+  },
+  {
+   "id": "S1",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "caption": "Только что вернулась. Ты ещё не спишь?",
+   "_optics": "телефон, вытянутая рука",
+   "prompt": "a selfie at arm's length, sitting back against the headboard of a made bed with her knees drawn up, wrapped in a long ivory silk dressing gown tied at the waist, her free hand behind her head in her hair, one bedside lamp with a warm shade lighting her from the side and the rest of the room falling into soft darkness, a mischievous half-smile and one eyebrow raised, shot on a phone at arm's length on the wide main camera, mild wide-angle stretch at the edges, everything from her to the room behind her reasonably sharp with no creamy background blur, smart HDR holding the windows and lifting the shadows so contrast is a little flat, faint over-sharpening halos along her shoulders, slight noise smearing in the dark corners, the horizon a degree or two off level, she is not centred in the frame"
+  },
+  {
+   "id": "S2",
+   "plan": "half",
+   "w": 1280,
+   "h": 1600,
+   "caption": "Ну хорошо. Одно.",
+   "_optics": "телефон, зеркало",
+   "_": "ОБЯЗАТЕЛЬНОЕ ТРЕБОВАНИЕ БРИФА: селфи в зеркале, телефон виден в кадре. Он же даёт вторую площадку под тату. ТАТУ ЗДЕСЬ БОЛЬШЕ НЕ ПРОСИТСЯ: селфи в зеркале физически показывает запястье ребром — рука держит телефон, — и замер это подтвердил на четырёх дублях подряд (43-62% нужной стороны при пороге 70). Обязательное требование брифа про зеркало и видимый телефон кадр выполняет, а тату несут P2 и S5.",
+   "prompt": "a mirror selfie in a warm-lit bathroom, she stands hip-cocked facing her own reflection and holds the phone up at chest height so the phone itself is clearly visible in the mirror, her LEFT arm raised beside it with the back of her left wrist turned toward the mirror, unobstructed and in focus, her left wrist bare with no watch and no bracelet, the ivory silk dressing gown slipping off one shoulder, hair loose over the other shoulder, warm tungsten light above the mirror, looking at her own reflection with a half-smile, shot on a phone at arm's length on the wide main camera, mild wide-angle stretch at the edges, everything from her to the room behind her reasonably sharp with no creamy background blur, smart HDR holding the windows and lifting the shadows so contrast is a little flat, faint over-sharpening halos along her shoulders, slight noise smearing in the dark corners, the horizon a degree or two off level, she is not centred in the frame"
+  },
+  {
+   "id": "S3",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "caption": "Свет выключить или так оставить?",
+   "_optics": "телефон, стоит на комоде",
+   "_": "Телефон поставлен, а не в руке — единственный способ снять себя со спины. Поза от этого другая, и арка не топчется на месте.",
+   "prompt": "the phone propped on a chest of drawers across the room, she kneels back on the bed with her weight on one hip, turned away from the camera and looking back over her shoulder into the lens, the silk dressing gown fallen off one shoulder and gathered at the elbow, a dark satin slip underneath, warm bedside lamp light raking across her back and shoulder, deep shadow beyond her, hair swept to one side, shot on a phone at arm's length on the wide main camera, mild wide-angle stretch at the edges, everything from her to the room behind her reasonably sharp with no creamy background blur, smart HDR holding the windows and lifting the shadows so contrast is a little flat, faint over-sharpening halos along her shoulders, slight noise smearing in the dark corners, the horizon a degree or two off level, she is not centred in the frame"
+  },
+  {
+   "id": "S4",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "caption": "Пойду в душ. Не скучай.",
+   "_optics": "телефон, через пар",
+   "prompt": "a phone photo of a bathroom mirror completely fogged with steam, she has wiped one horizontal stripe clear with the flat of her hand and only the strip with her eyes and the bridge of her nose is readable in it, the rest of her reflection soft and lost in the condensation, her wet hand still against the glass at the edge of the wiped band, warm bathroom light behind her, water droplets running down the glass, looking straight into her own reflection, shot on a phone at arm's length on the wide main camera, mild wide-angle stretch at the edges, everything reasonably sharp with no creamy background blur, smart HDR holding the windows and lifting the shadows so contrast is a little flat, faint over-sharpening halos, the horizon a degree or two off level",
+   "_": "Душ из брифа. Силуэт за запотевшим стеклом модель не нарисовала ни разу — выходила одетая женщина у душевой, и арка истории на этом ломалась. Тот же смысл, но через то, что модель рисует уверенно: запотевшее зеркало, протёртая ладонью полоса и её глаза в ней."
+  },
+  {
+   "id": "S5",
+   "plan": "half",
+   "w": 1280,
+   "h": 1600,
+   "caption": "Всё. Теперь твоя очередь.",
+   "_optics": "телефон, вытянутая рука",
+   "prompt": "a selfie at arm's length, sitting on the edge of the bath wearing a short white waffle bathrobe pulled closed and belted, one knee pulled up with her LEFT forearm resting along that knee and the back of her left hand and wrist turned toward the camera, unobstructed and in focus, her left wrist bare with no watch and no bracelet, wet hair pushed back off her face, skin still damp and flushed from the heat, steam in the air, laughing openly with her eyes half shut, warm bathroom light, tiles and a fogged mirror behind her, shot on a phone at arm's length on the wide main camera, mild wide-angle stretch at the edges, smart HDR lifting the shadows, faint over-sharpening halos, the horizon a degree or two off level",
+   "tattoo_visible": true,
+   "_": "Конец арки и вторая площадка под тату: свободное предплечье лежит на поднятом колене тыльной стороной к объективу — та же геометрия, что работает у P2."
+  }
+ ],
+ "_reactor_nsfw": "У ноды переноса лица (ReActor) есть СВОЯ проверка на непристойный контент, и она отказывается работать, возвращая чёрный квадрат 512x512 — то есть заглушку ComfyUI при упавшей ноде. В логе воркера это видно прямо: «NSFW content detected with score=0.987, skipping...». Срабатывала она на кадрах с большой площадью открытой кожи: спортивный топ без рукавов на корте (ложное срабатывание, счёт 0.987) и полотенце после душа.\nОБХОДИТЬ ЭТУ ПРОВЕРКУ НЕЛЬЗЯ — она стоит на инструменте пересадки лиц именно затем, зачем стоит. Изменён гардероб: топ с коротким рукавом вместо безрукавки, короткий махровый халат вместо полотенца. Это правка содержания кадра, а не обход проверки, и сюжету она не мешает: арка «после душа» держится паром, мокрыми волосами и светом, а не количеством кожи.\nСЛЕДСТВИЕ ДЛЯ КОНВЕЙЕРА: кадр, который проверка забраковала, остаётся БЕЗ переноса лица, то есть со сходством эдита (0.65-0.70) вместо 0.85+. На сдаче из десяти кадров это сразу видно глазами — лицо другое. Поэтому перенос теперь проверяет размер возвращённого кадра и падает с внятной ошибкой, а не отдаёт чёрный квадрат дальше по конвейеру."
+}

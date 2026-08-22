@@ -1,0 +1,120 @@
+{
+  "project": "bridget",
+  "part": 1,
+  "forced": false,
+  "partial": false,
+  "missing_cells": [],
+  "frames": [
+    {
+      "cell": "P1",
+      "label": "Геройский портрет",
+      "function": "Это её лицо. Кадр, по которому её узнают во всех остальных.",
+      "delivered_as": "deliverables/bridget/part1_profile/01_hero_portrait.jpg",
+      "source": "D:/Cursor/persona-forge-work/bridget/frames/P1/P1_s308585876_01.png",
+      "seed": 308585876,
+      "prompt": "brdgt_w, a candid photograph of a real woman, shot on film-like digital, not a render, not an illustration, not a 3D character, chest-up portrait, she fills the frame, direct eye contact with the lens, chin slightly lowered, a half-smile, a 51-year-old woman, long layered warm mid-brown hair with multi-tonal salon balayage lightening through the lengths to sun-blonde ends, green-hazel eyes, high cheekbones with mild volume loss beneath them, a straight nose with a slightly rounded tip, thin upper lip and fuller lower lip, one eyebrow set marginally higher than the other, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, thinner vermilion of the upper lip, scattered grey strands at the temples and along the parting, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, hair long enough to reach mid-back when loose, an even warm mid-brown from the parting down through the lengths, lightening to sun-blonde only in the last third and at the ends, never platinum and never one flat tone, an ivory silk blouse, one button open, the same jewellery in every frame: a narrow gold bangle and a slim gold watch on her right wrist, small thin gold hoop earrings, at home by a large window, the room behind her thrown out of focus into warm neutral tones, soft north-facing window light from camera left, a gentle falloff into deep shadow on the right side of her face, the shadow side left dark and unlifted, 85mm at f/2, eye level, focus locked on the near eye, eye contact held a beat too long, chin slightly down, visible skin pores and fine facial texture, uneven natural skin tone with faint redness around the nose and chin, a few flyaway hairs catching the light, fabric with real creases and pressure folds, slight optical softness toward the frame corners, natural unretouched skin, full natural colour, warm skin tones against cooler ambient light, a woman clearly in her early fifties, mature and unaltered",
+      "caption": "",
+      "caption_ru": "",
+      "function_en": "This is her face. The frame the other four are recognised against.",
+      "alt": "Chest-up portrait of a woman in her early fifties by a window, direct eye contact, ivory silk blouse",
+      "nudity_level": "clothed",
+      "mirror_selfie": false,
+      "tattoo_visible": false,
+      "tattoo_applied": false,
+      "scene_class": "indoor",
+      "size": [
+        1152,
+        1440
+      ]
+    },
+    {
+      "cell": "P2",
+      "label": "В полный рост",
+      "function": "Доказывает фигуру и возраст одновременно — тело, осанка, кисти в кадре.",
+      "delivered_as": "deliverables/bridget/part1_profile/02_street_full_length.jpg",
+      "source": "D:/Cursor/persona-forge-work/bridget/frames/P2/P2_s171403609_01.png",
+      "seed": 171403609,
+      "prompt": "brdgt_w, a candid photograph of a real woman, shot on film-like digital, not a render, not an illustration, not a 3D character, a full-length street photograph of her walking, the whole standing figure small in a wide frame, photographed from far across the road, looking off to camera right, caught mid-thought, not posing, a 51-year-old woman, long layered warm mid-brown hair with multi-tonal salon balayage lightening through the lengths to sun-blonde ends, green-hazel eyes, high cheekbones with mild volume loss beneath them, a straight nose with a slightly rounded tip, thin upper lip and fuller lower lip, one eyebrow set marginally higher than the other, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, thinner vermilion of the upper lip, scattered grey strands at the temples and along the parting, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, hair long enough to reach mid-back when loose, an even warm mid-brown from the parting down through the lengths, lightening to sun-blonde only in the last third and at the ends, never platinum and never one flat tone, fit but not gym-built — the build of someone who does yoga and paddle tennis four times a week: defined shoulders and forearms, a long neck, upright posture, strong legs, a camel wool coat over a fine navy knit, slim trousers, pointed-toe stiletto pumps, the same jewellery in every frame: a narrow gold bangle and a slim gold watch on her right wrist, small thin gold hoop earrings, on a wide city sidewalk in the late afternoon, a limestone building facade behind her, one parked car far out of focus, low warm afternoon sun raking from behind camera right, long soft shadow across the pavement, 35mm at f/4 from slightly below eye level, full body in frame with headroom, she occupies the centre of her own frame; nothing in the composition suggests she is waiting for anyone, visible skin pores and fine facial texture, uneven natural skin tone with faint redness around the nose and chin, a few flyaway hairs catching the light, fabric with real creases and pressure folds, slight optical softness toward the frame corners, natural unretouched skin, full natural colour, warm skin tones against cooler ambient light, a woman clearly in her early fifties, mature and unaltered",
+      "caption": "",
+      "caption_ru": "",
+      "function_en": "Proves the figure and the age at once — body, posture, hands in shot.",
+      "alt": "Full-length street photograph of a woman walking on a city pavement in a camel coat, late afternoon sun",
+      "nudity_level": "clothed",
+      "mirror_selfie": false,
+      "tattoo_visible": false,
+      "tattoo_applied": false,
+      "scene_class": "day",
+      "size": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "cell": "P3",
+      "label": "Активность, кэндид",
+      "function": "Аутентичность. Единственный кадр, где она не знает, что её снимают.",
+      "delivered_as": "deliverables/bridget/part1_profile/03_paddle_court.jpg",
+      "source": "D:/Cursor/persona-forge-work/bridget/frames/P3/P3_s9104_01.png",
+      "seed": 9104,
+      "prompt": "brdgt_w, a candid photograph of a real woman, shot on film-like digital, not a render, not an illustration, not a 3D character, caught mid-rally, standing, her left arm extended forward toward the lens for balance while her right arm swings a paddle racket back behind her, three-quarter body, slightly off-centre in the frame, not at the camera at all — her eyes tracking the ball above and past the lens, a 51-year-old woman, long layered warm mid-brown hair with multi-tonal salon balayage lightening through the lengths to sun-blonde ends, green-hazel eyes, high cheekbones with mild volume loss beneath them, a straight nose with a slightly rounded tip, thin upper lip and fuller lower lip, one eyebrow set marginally higher than the other, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, thinner vermilion of the upper lip, scattered grey strands at the temples and along the parting, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, hair long enough to reach mid-back when loose, an even warm mid-brown from the parting down through the lengths, lightening to sun-blonde only in the last third and at the ends, never platinum and never one flat tone, fit but not gym-built — the build of someone who does yoga and paddle tennis four times a week: defined shoulders and forearms, a long neck, upright posture, strong legs, a fitted charcoal yoga top and leggings, hair tied back in a low ponytail with strands escaping, bare ears and bare neck, only the narrow gold bangle left on her right wrist, her left arm turned so the back of her left wrist faces the lens, unobstructed and in focus, her left sleeve pushed up above the elbow and the skin of her left wrist and forearm completely bare, every piece of jewellery she wears — the bangle and the watch — on her right wrist only, a paddle tennis court in the morning, green windscreen fencing behind her, racket in her right hand mid-swing, flat bright overcast morning light, no hard shadows, 135mm at f/2.8 from across the court, a hint of motion blur in the racket hand, her attention is elsewhere, caught mid-thought rather than posing, visible skin pores and fine facial texture, uneven natural skin tone with faint redness around the nose and chin, a few flyaway hairs catching the light, fabric with real creases and pressure folds, slight optical softness toward the frame corners, natural unretouched skin, full natural colour, warm skin tones against cooler ambient light, a woman clearly in her early fifties, mature and unaltered",
+      "caption": "",
+      "caption_ru": "",
+      "function_en": "Authenticity. The only frame where she does not know she is being photographed.",
+      "alt": "A woman mid-rally on a paddle tennis court, arm extended toward the lens, overcast morning light",
+      "nudity_level": "clothed",
+      "mirror_selfie": false,
+      "tattoo_visible": true,
+      "tattoo_applied": true,
+      "scene_class": "day",
+      "size": [
+        1152,
+        1440
+      ]
+    },
+    {
+      "cell": "P4",
+      "label": "С собакой",
+      "function": "Теплота и уязвимость — бит, который в критериях назван emotional complexity.",
+      "delivered_as": "deliverables/bridget/part1_profile/04_living_room_dog.jpg",
+      "source": "D:/Cursor/persona-forge-work/bridget/frames/P4/P4_s1907010619_01.png",
+      "seed": 1907010619,
+      "prompt": "brdgt_w, a candid photograph of a real woman, shot on film-like digital, not a render, not an illustration, not a 3D character, seated on the floor, crouched toward a dog, her face turned down toward it, down at the dog, a real unguarded smile with visible eye creases, a 51-year-old woman, long layered warm mid-brown hair with multi-tonal salon balayage lightening through the lengths to sun-blonde ends, green-hazel eyes, high cheekbones with mild volume loss beneath them, a straight nose with a slightly rounded tip, thin upper lip and fuller lower lip, one eyebrow set marginally higher than the other, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, thinner vermilion of the upper lip, scattered grey strands at the temples and along the parting, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, hair long enough to reach mid-back when loose, an even warm mid-brown from the parting down through the lengths, lightening to sun-blonde only in the last third and at the ends, never platinum and never one flat tone, an oversized grey cashmere sweater slipping off one shoulder, bare feet, hair loose, the same jewellery in every frame: a narrow gold bangle and a slim gold watch on her right wrist, small thin gold hoop earrings, her living room floor, a worn terracotta and blue kilim rug, an old grey greyhound leaning into her, a stack of books and a green glass vase behind, warm low lamplight from a floor lamp behind camera left, cool blue evening daylight from a window on the right holding the shadows, the room falling into soft darkness beyond, 50mm at f/1.8, low, almost at floor level, visible skin pores and fine facial texture, uneven natural skin tone with faint redness around the nose and chin, a few flyaway hairs catching the light, fabric with real creases and pressure folds, slight optical softness toward the frame corners, natural unretouched skin, full natural colour, warm skin tones against cooler ambient light, a woman clearly in her early fifties, mature and unaltered",
+      "caption": "",
+      "caption_ru": "",
+      "function_en": "Warmth and vulnerability — the beat the brief calls emotional complexity.",
+      "alt": "A woman on a living-room floor beside an old greyhound, oversized grey sweater, warm lamplight",
+      "nudity_level": "clothed",
+      "mirror_selfie": false,
+      "tattoo_visible": false,
+      "tattoo_applied": false,
+      "scene_class": "indoor",
+      "size": [
+        1152,
+        1440
+      ]
+    },
+    {
+      "cell": "P5",
+      "label": "Её мир",
+      "function": "Контекст жизни. Снято другим человеком через стол — то, что в профилях выглядит как настоящая жизнь.",
+      "delivered_as": "deliverables/bridget/part1_profile/05_restaurant_evening.jpg",
+      "source": "D:/Cursor/persona-forge-work/bridget/frames/P5/P5_s9103_01.png",
+      "seed": 9103,
+      "prompt": "brdgt_w, a candid photograph of a real woman, shot on film-like digital, not a render, not an illustration, not a 3D character, seated at a restaurant table, upper body, her left hand raising a glass of red wine toward the lens, at whoever is sitting across from her, mid-sentence, mouth slightly open, a 51-year-old woman, long layered warm mid-brown hair with multi-tonal salon balayage lightening through the lengths to sun-blonde ends, green-hazel eyes, high cheekbones with mild volume loss beneath them, a straight nose with a slightly rounded tip, thin upper lip and fuller lower lip, one eyebrow set marginally higher than the other, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, thinner vermilion of the upper lip, scattered grey strands at the temples and along the parting, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, hair long enough to reach mid-back when loose, an even warm mid-brown from the parting down through the lengths, lightening to sun-blonde only in the last third and at the ends, never platinum and never one flat tone, a wine-red silk dress, hair down and loose, the same jewellery in every frame: a narrow gold bangle and a slim gold watch on her right wrist, small thin gold hoop earrings, her left arm turned so the back of her left wrist faces the lens, unobstructed and in focus, her left sleeve pushed up above the elbow and the skin of her left wrist and forearm completely bare, every piece of jewellery she wears — the bangle and the watch — on her right wrist only, a warm dimly lit restaurant in the evening, other tables softly out of focus behind her, a candle on the table, a deep teal upholstered banquette behind her shoulder, candle warmth from below-front and a small cool blue-white source spilling in from a window behind her, rimming her hair, 50mm at f/1.4 across a table, slight camera shake, focus just barely on the near eye, hands near the throat, collarbone or opposite forearm — a self-touch that reads as self-comfort, visible skin pores and fine facial texture, uneven natural skin tone with faint redness around the nose and chin, a few flyaway hairs catching the light, fabric with real creases and pressure folds, slight optical softness toward the frame corners, natural unretouched skin, full natural colour, warm skin tones against cooler ambient light, a woman clearly in her early fifties, mature and unaltered",
+      "caption": "",
+      "caption_ru": "",
+      "function_en": "The context of a life. Shot by someone else across a table — what reads as real life in a profile.",
+      "alt": "A woman at a restaurant table in the evening raising a glass of red wine toward the lens",
+      "nudity_level": "clothed",
+      "mirror_selfie": false,
+      "tattoo_visible": true,
+      "tattoo_applied": true,
+      "scene_class": "night",
+      "size": [
+        1152,
+        1440
+      ]
+    }
+  ],
+  "blocked_by_gates": []
+}
