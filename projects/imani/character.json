@@ -1,0 +1,68 @@
+{
+  "id": "imani",
+  "display_name": "Imani",
+  "age": 34,
+  "_": "ВТОРОЙ ПЕРСОНАЖ — ЭТО ПРОВЕРКА, ЧТО ЗДЕСЬ ИНСТРУМЕНТ, А НЕ ОДНА ВЫПОЛНЕННАЯ РАБОТА. Бриф написан в той же форме, в какой его даёт заказчик в тестовом (Name / Age / Occupation / Background / Appearance / Personality / Goal) — см. docs/imani/brief.md — и переведён в те же поля, что у bridget, без единой правки кода. Разведён он с Бриджит НАМЕРЕННО и по тем осям, которые конвейер МЕРЯЕТ: возраст 34 против 51 (другая полоса ворот), глубокий тёмный тон кожи против светлого (ворота цвета и микрорельефа считаются на другом материале), сложение работающего человека против «fit and chic», и мир жёсткого искусственного света против мягкого дневного. Вторая пятидесятилетняя блондинка не доказала бы ничего.",
+  "medium": "a candid photograph of a real woman, shot on film-like digital, not a render, not an illustration, not a 3D character",
+  "identity_core": "a 34-year-old Black woman, deep brown skin with warm undertones, natural hair in tight coils cropped close at the sides and fuller on top, dark brown eyes set slightly wide, a broad nose with a rounded tip, full lips with a defined cupid's bow, a small raised scar through the outer end of her right eyebrow, a narrow gold hoop in her left nostril",
+  "_identity_core": "Опознавательные признаки выбраны так, чтобы ПЕРЕЖИВАТЬ смену ракурса и света: шрам через бровь и гвоздик в носу читаются и в профиль, и против света, а форма причёски держится, даже когда лица почти не видно. У Бриджит ту же роль играют родинка под скулой и разная высота бровей. Тон кожи назван прямо и первым: модели по умолчанию осветляют, и «Black woman» без описания подтона уезжает в усреднённый типаж.",
+  "age_markers": "faint lines at the outer corners of her eyes visible when she squints, slightly darker skin over the knuckles and the backs of her hands from work, a few small healed nicks on the fingers, natural skin with visible pores across the nose and cheeks, no cosmetic smoothing",
+  "_age_markers": "Тридцать четыре — не пятьдесят один, и задача здесь ОБРАТНАЯ: не состарить, а не дать модели омолодить до двадцати. Поэтому маркеры скупые и трудовые (руки, костяшки, заломы от прищура), а не морщины: приписанные морщины на этом возрасте читаются как плохой грим. Полоса ворот возраста в манифесте настроена под Бриджит — для этого проекта её надо пересчитать по факту, и до тех пор возраст здесь справочный.",
+  "build": "the build of someone who works standing and with her hands — broad shoulders, visible forearm and grip definition, a solid back, no gym sculpting and no thinness",
+  "hair_rules": "natural tight coils, never straightened and never a wig, close taper at the sides and a fuller crown, edges visible and unretouched",
+  "_hair_rules": "Волосы — самый частый источник расхождения между кадрами: модель то выпрямляет, то удлиняет. Правило описывает ФАКТУРУ и форму и запрещает выпрямление положительным требованием, потому что при cfg 1.0 запрет не работает.",
+  "tattoo": {
+    "placement": "inner right forearm",
+    "visible_in": [
+      "I2",
+      "I5",
+      "S2",
+      "S4"
+    ],
+    "_visible_in": "Ячейки, где предплечье В КАДРЕ. Список сверяется тестом с полем tattoo_visible обеих раскадровок: разойдясь, они означают либо площадку под композит там, где её не будет, либо вклейку в кадр, который её не обещал.",
+    "prompt_clause": "her right forearm turned toward the lens, the inner forearm visible, unobstructed and in focus",
+    "_prompt_clause": "Композиту нужно КУДА вклеивать: без этой оговорки предплечье не обязано попасть в кадр. Та же ошибка была у Бриджит и ловилась ревью.",
+    "asset": null,
+    "_asset": "Ассет НЕ НАРИСОВАН — здесь стоит null, а не путь к чужой картинке. Делается scripts/make_tattoo_asset.py по flash_prompt ниже; до тех пор шаг вклейки честно падает на чтении файла, и это правильное поведение, а не поломка.",
+    "flash_prompt": "a fine-line tattoo flash sheet drawing of a single sewing needle crossed with a small feather, black ink on white paper, no shading, no colour",
+    "ink_rgb": [
+      26,
+      24,
+      28
+    ],
+    "_meaning": "Игла и перо — её мать была швеёй. Тату датирует героиню так же, как Manolo Blahnik датирует Бриджит: сделана в двадцать с небольшим, выцвела, линия расплылась."
+  },
+  "wardrobe_bible": {
+    "_": "Гардероб — характеристика. У Бриджит это дорогая ткань без логотипа; здесь — рабочая одежда, пережившая стирки, и одна вещь не по случаю.",
+    "materials": "washed cotton, heavy denim, worn leather, ribbed knit — fabrics that hold the shape of the body that wears them",
+    "palette": "black, oxblood, faded indigo, bone white, one recurring mustard",
+    "jewelry": "the same narrow gold nose hoop and two thin gold rings on her right hand in every frame",
+    "_jewelry": "Одни и те же украшения в каждом кадре — самое дешёвое и самое заметное доказательство одного человека в один период жизни. Правило взято у Бриджит дословно, потому что оно сработало.",
+    "signature": "a black cotton apron with a worn leather strap, tied at the waist even when she is not working",
+    "hands": "short unpainted nails, ink under one thumbnail, a plaster on her left index finger in at least one frame",
+    "_hands": "Руки — половина её характера, и модель их обычно усредняет, поэтому требование сформулировано положительно и подробно."
+  },
+  "personality_in_frame": {
+    "_": "Личность из брифа переводится в то, что ФИЗИЧЕСКИ ВИДНО В КАДРЕ, иначе в изображение она не попадает вообще. Черта назначается ячейкой (поле trait), а не угадывается по тексту кадра — угадывание уже ставило Бриджит закрытую черту поверх задачи кадра на открытую улыбку.",
+    "exacting": "her attention is on her hands and not on the lens, the frame catches her mid-task rather than posed",
+    "warm": "a full open smile with the eyes creasing, shoulders dropped, leaning slightly toward whoever is behind the camera",
+    "guarded": "chin level, mouth relaxed and closed, one shoulder turned a few degrees away from the lens",
+    "tired": "weight settled onto one hip, gaze unfocused past the camera, a hand resting on the back of her own neck"
+  },
+  "camera_default": "shot on a full-frame camera with a fast prime lens, shallow but not extreme depth of field, natural perspective at eye level",
+  "realism_clause": "visible skin pores and fine facial texture, specular highlights on the forehead and cheekbones rather than flat matte skin, a few loose coils catching the light at the hairline, fabric with real creases and pressure folds, slight optical softness toward the frame edges",
+  "_realism_clause": "Хвост реализма НЕ скопирован у Бриджит, и это важнее, чем кажется: на тёмной коже пластик выдаёт себя иначе — не заглаженными порами, а РОВНЫМ матовым тоном без бликов. Поэтому здесь потребованы блики на лбу и скулах, которых в её редакции нет. Первое место, где договор полей одинаковый, а содержание обязано быть разным.",
+  "forbidden_as_positive": {
+    "_": "Каждый пункт — переформулировка запрета в требование: при cfg 1.0 негативный обусловливатель не влияет вообще, запрещать нечем.",
+    "__": "Пункты не пересекаются с identity_core и realism_clause: дубль требования при cfg 1.0 — это удвоенный вес, и кадр уезжает в подчёркнутость.",
+    "lightening": "her skin stays deep brown in every light, including backlight and flash",
+    "smoothing": "her skin keeps its texture in the highlights, not only in the shadows"
+  },
+  "anchor": {
+    "image": null,
+    "face_model": null,
+    "embedding": null,
+    "_": "ЯКОРЯ НЕТ, и это объявлено, а не замаскировано: кадры не генерировались."
+  },
+  "_state": "NOT_MEASURED — заведены бриф и раскадровки, GPU не запускался: нет кадров, реестра, вердикта ворот, якоря, сдачи и ассета тату. Всё, что проверено, проверено без GPU."
+}

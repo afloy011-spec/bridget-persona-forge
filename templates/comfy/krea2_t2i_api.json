@@ -1,0 +1,76 @@
+{
+  "_": "Базовый t2i Krea 2 Turbo: описание → кадр. Основной источник пикселей конвейера (generate.TEMPLATE), второй — эдит референса в krea2_identity_edit_api.json.",
+
+  "_lorabox": "ЦЕПОЧКА 20-24 — ЭТО ФОЛБЭК, А НЕ ТО, ЧТО УЕЗЖАЕТ НА НАШ ВОРКЕР. Открывший файл видит пять LoraLoaderModelOnly и думает, что так и снимается; на самом деле generate._apply_lora_stack сначала спрашивает у сервера ноду LoraBox, и если она есть — узел 20 переписывается в LoraBox со всем стеком внутри, а 21-24 удаляются вместе со связями. Проверено на живом воркере 20.08.2026: /object_info отдаёт класс LoraBox, то есть в кадр идёт коробка. Цепочка остаётся в файле намеренно — на стоковом ComfyUI без пака граф с коробкой не проходит валидацию вовсе, и фолбэк это единственное, что даёт чужому человеку получить кадр. Цена фолбэка замерена не мной и записана в generate._apply_lorabox: коробка ведёт через себя ещё и CLIP, поэтому реализм-лоры действуют на текстовый энкодер (фактура лица 232 → 274, волосы 0.599 → 0.542), цепочка кладёт их только на модель.",
+
+  "_lora_slots": "СЛОТОВ ПЯТЬ, А ЛОР В СТЕКЕ ШЕСТЬ — И ЭТО НЕ ОШИБКА ФАЙЛА. Персонажная лора идёт первой, за ней пять реализм-лор манифеста; недостающие звенья generate._apply_loras достраивает сам, имена и силы берёт из assets.json → models. Имена в файле — это то, что увидит человек, открывший шаблон руками, и они обязаны совпадать с манифестом: расхождение здесь означает подмену весов в ручном прогоне при зелёном конвейере.",
+
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {"unet_name": "krea2_turbo_fp8_scaled.safetensors", "weight_dtype": "default"}
+  },
+  "20": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {"lora_name": "krea2_realism_lora.safetensors", "strength_model": 0.65, "model": ["1", 0]}
+  },
+  "21": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {"lora_name": "RealisticSnapshotKrea2.safetensors", "strength_model": 0.45, "model": ["20", 0]}
+  },
+  "22": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {"lora_name": "purelens_krea2.safetensors", "strength_model": 0.9, "model": ["21", 0]}
+  },
+  "23": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {"lora_name": "k2_amateur_slider.safetensors", "strength_model": 0.35, "model": ["22", 0]}
+  },
+  "24": {
+    "_": "СИЛА 0.0 ПРОТИВ 0.8 В МАНИФЕСТЕ — НАМЕРЕННО. «Одноразовая камера» заведена под ночь со вспышкой, а днём красит кадр в зелень, поэтому её сила выбирается по классу сцены (generate.DISPOSABLE_BY_SCENE: день и интерьер 0.0, ночь 0.55, вспышка 0.8) и подставляется ПО ИМЕНИ ЛОРЫ, а не по номеру слота. В файле стоит дневное значение: шаблон, запущенный руками как есть, не должен зеленить кадр.",
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {"lora_name": "k2_disposable_camera.safetensors", "strength_model": 0.0, "model": ["23", 0]}
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": {"clip_name": "qwen3vl_4b_fp8_scaled.safetensors", "type": "krea2", "device": "default"}
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {"vae_name": "qwen_image_vae.safetensors"}
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {"text": "PLACEHOLDER PROMPT", "clip": ["2", 0]}
+  },
+  "5": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": {"conditioning": ["4", 0]}
+  },
+  "6": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {"width": 1152, "height": 1440, "batch_size": 1}
+  },
+  "7": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 1,
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0,
+      "model": ["24", 0],
+      "positive": ["4", 0],
+      "negative": ["5", 0],
+      "latent_image": ["6", 0]
+    }
+  },
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {"samples": ["7", 0], "vae": ["3", 0]}
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {"filename_prefix": "persona-forge/frame", "images": ["8", 0]}
+  }
+}

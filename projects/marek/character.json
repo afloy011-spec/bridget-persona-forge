@@ -1,0 +1,69 @@
+{
+  "id": "marek",
+  "display_name": "Marek",
+  "age": 57,
+  "_": "Карточка идентичности второго персонажа. Блоки отсюда собирает в промпт тот же scripts/prompts.py и повторяет В КАЖДОМ кадре без изменений — идентичность держится повторением, а не удачей. Проект заведён ради одного вопроса: работает ли конвейер на человеке, под которого он не писался. Ни одной строки кода ради него не поправлено.",
+  "_state": "СОСТОЯНИЕ ПРОЕКТА — NOT_MEASURED, А НЕ PASS. Ни одного кадра не сгенерировано, якорь не выбран, сдачи нет, координаты вклейки тату не подобраны. Всё, что проверено, проверено без GPU: prompts.py собирает промпты, generate.py --dry печатает план и ничего не создаёт. Замеров в этой карточке нет не потому, что они хорошие, а потому что их нет; отличать это состояние от пройденного — правило всего репозитория (assets.json → gates._required).",
+  "medium": "a candid photograph of a real man, shot on film-like digital, not a render, not an illustration, not a 3D character",
+  "_medium": "Носитель стоит ПЕРВЫМ блоком каждого промпта. Модели надо сказать, что она делает фотографию, иначе она делает портрет, а портрет — это ровно то, что опознаёт и глаз, и детектор. Формулировка повторяет карточку Бриджит почти дословно и это осознанно: это правило конвейера, а не свойство персонажа, и расходиться ему тут не в чем.",
+  "identity_core": "a 57-year-old man, close-cropped grey hair with the hairline receded high at the temples, three days of grey stubble, deep-set brown eyes under heavy straight brows, a wide nose broken once and set slightly off-centre toward the right, a heavy square jaw, a narrow mouth with the upper lip almost hidden when he is not speaking, the top rim of his LEFT ear notched by an old scar",
+  "_identity_core": "Сломанный набок нос и рубец на ухе — не украшение, а анти-AI-приём: обобщённо-правильное лицо и глаз, и детектор читают как сгенерированное, а одна конкретная неправильность делает лицо конкретным человеком. Урок карточки Бриджит применён сразу: опознавательный знак не должен жить в тени. Ухо ЛЕВОЕ, то есть при съёмке в лоб оно оказывается на правой половине кадра, поэтому во всех ячейках ключевой свет идёт с камеры-справа; там, где это невозможно (двор, печь), знак прикрыт кепкой или ракурсом намеренно, а не случайно. Укладка сюда не пишется, она живёт в hair_rules: два взаимоисключающих требования о волосах внутри одного промпта дерутся между собой.",
+  "age_markers": "deep horizontal furrows across the forehead that stay there when his face is at rest, crow's feet cutting back from both outer eye corners, heavy folds running from the nostrils down to the corners of the mouth, loose skin sagging under the jaw, wiry grey hairs standing out of the eyebrows, broken capillaries across the cheeks and the bridge of the nose, thickened knuckles and dark cracked skin on the backs of his hands, forearms burned dark to a hard line above the elbow, open pores across the nose and cheeks",
+  "_age_markers": "Главный автопровал этой задачи одинаков для любого пола: базовая модель тянет взрослого человека к тридцати. Возраст живёт ЗДЕСЬ, а не в слове «57-year-old» — числу модель не верит, деталям верит. Кисти и шея обязательны: диффузия их прячет, а именно они доказывают возраст проверяющему. БЛОК НАПИСАН БЕЗ СМЯГЧЕНИЙ С ПЕРВОЙ РЕДАКЦИИ: ни «fine», ни «faint», ни «subtle». Причина не во вкусе — при cfg 1.0 смягчающее прилагательное читается моделью как «почти нет», это та же механика, из-за которой запреты здесь переписаны в требования. У Бриджит смягчения стоили лет и вычищались задним числом уже после сдачи, поэтому её карточка их до сих пор носит; цифры стенда — в docs/bridget/lab_age.md, повторять их прозой запрещено правилом репозитория.",
+  "build": "heavy through the chest and shoulders from thirty years of lifting trays and flour sacks, a thick neck, a solid belly carried out in front of him, forearms out of proportion to the rest of him, a flat-footed stance with the weight forward",
+  "_build": "Сложение — это тоже биография. Тело, построенное работой, а не залом: оно тяжёлое, несимметричное и держится вперёд. Блок подмешивается только в те кадры, где тело действительно видно (body_in_frame), — в поясном портрете описание ног отбирает вес у лица.",
+  "hair_rules": "hair clipped short all over with clippers and never styled, grey going white above the ears, a receded hairline he has never tried to cover",
+  "_hair_rules": "Длина и линия роста волос — признак одного человека, поэтому подмешиваются в каждый промпт, а не оставляются на усмотрение кадра. Щетина описана только в identity_core и намеренно НЕ повторена здесь: дедупликатор prompts._clean ловит только буквальное вхождение, а два разными словами сказанных требования он пропустит, и при cfg 1.0 они сложатся в удвоенный вес.",
+  "tattoo": {
+    "placement": "outer left forearm, midway between wrist and elbow",
+    "prompt_clause": "his left forearm turned outward to the lens, bare from the wrist to the elbow, unobstructed and in focus",
+    "_prompt_clause": "Композиту нужно КУДА ложиться, и площадка требуется словами — иначе предплечье не обязано попасть в кадр вообще. Сама графика словами не описывается никогда (см. ниже), требуется только открытая, неперекрытая и резкая площадка.",
+    "size_mm": 58,
+    "description": "a crude hand-poked anchor with a rope looped through the ring, one blue-black ink gone blue-green and spread under the skin the way a home-made tattoo spreads over thirty-five years, the lines thickened, the outline broken where the skin has stretched",
+    "asset": "assets/tattoo_anchor.png",
+    "flash_prompt": "a minimal tattoo flash drawing of one simple ship anchor with a rope looped through the ring, thick uneven hand-poked ink lines, no shading, no fill, no text, no lettering, centred on plain white paper, clean high contrast line art",
+    "ink_rgb": [70, 96, 92],
+    "_asset": "ФАЙЛА ЕЩЁ НЕТ, и это заявлено, а не скрыто: ассет делается на GPU (scripts/make_tattoo_asset.py), а проект заведён без единого запуска генерации. Пока файла нет, шаг вклейки упадёт на его чтении — это правильное поведение, потому что вклеивать нечего. flash_prompt и ink_rgb лежат здесь готовыми: сейчас скрипт держит и то, и другое у себя в виде констант под шпильку Бриджит, и второму персонажу их взять неоткуда.",
+    "_": "МОДЕЛЬ ЭТО НЕ РИСУЕТ. Мелкая графика на предплечье выходит разной кашей в каждом кадре, а тату в критериях стоит отдельной строкой. Рисуется один раз как графический ассет и вклеивается композитом — тогда во всех кадрах оно одно и то же. Расплывшийся сине-зелёный контур обязателен: чёткая свежая чёрная линия датирует тату вчерашним днём и врёт про биографию, в которой она с армии.",
+    "visible_in": [
+      "M2",
+      "M5",
+      "N2"
+    ]
+  },
+  "wardrobe_bible": {
+    "_": "Гардероб — это характеристика. У него нет вещей, выбранных для вида: всё куплено на рынке, доношено до состояния тряпки и стирано столько раз, что село. Одежда датирует его так же, как Бриджит датирует люксовая ткань, только в другую сторону.",
+    "materials": "cotton drill, worn denim, acrylic knit, rubber-soled clogs — cloth washed until it has lost its shape and holds flour in its seams",
+    "palette": "faded navy, off-white gone grey, olive, one recurring maroon",
+    "jewelry": "a scratched steel watch on his right wrist, a pale band of untanned skin at the base of his left ring finger where a wedding ring was for twenty years",
+    "_jewelry": "Одни и те же вещи во всех кадрах — самое дешёвое и самое заметное доказательство того, что это один человек в один период жизни, а не десять разных генераций. МЕТА-ФРАЗА «одни и те же в каждом кадре» в промпт НЕ едет, хотя в карточке Бриджит она едет: это указание режиссёру, а не модели, и в промпте оно работает ровно как шум — тот же урок, который карточка Бриджит уже выучила в personality_in_frame._guarded, но применила только там. Модели описывается предмет, а не правило.",
+    "_laterality": "ЛАТЕРАЛЬНОСТЬ РАЗВЕДЕНА ОДИН РАЗ И ЖЁСТКО: тату — ВНЕШНЯЯ сторона ЛЕВОГО предплечья, часы — ПРАВОЕ запястье, ожоговые отметины пекаря — ПРАВОЕ предплечье. Иначе металл и шрамы садятся на площадку под композит, и вклейка либо не лезет, либо ложится поверх них.",
+    "_sleeves": "ПРАВИЛО РУКАВОВ. Левое предплечье открыто ТОЛЬКО в тех кадрах, где стоит tattoo_visible. Во всех остальных рукав опущен, и это не костюм, а непротиворечивость набора: голое левое предплечье без тату в наборе, где в трёх кадрах оно с тату, — это несовпадение, которое видно с первого взгляда и которого не ловит ни одно из ворот.",
+    "nails": "short nails with flour worked into the beds, one thumbnail bruised black and growing out",
+    "shoes": "white rubber bakery clogs at work, scuffed brown leather shoes everywhere else"
+  },
+  "personality_in_frame": {
+    "_": "Характер переводится в то, что физически видно в кадре. Всё, что осталось прилагательным, до изображения не доезжает вообще: модель не умеет снимать «гордость», она умеет снимать развёрнутые плечи.",
+    "proud": "his chin is level and his shoulders are square to whatever he is doing, and nothing in the posture apologises for the work",
+    "wary": "he has checked the lens once and then decided to let it be there — the face of a man who is photographed twice a year",
+    "tender": "his hands slow down and open around whatever he is holding, the same hands that throw sacks",
+    "tired": "the night sits in his eyelids and in the pause between two movements, the body still going and the face already stopped",
+    "_wary": "Формулировка обязана описывать ОДИН кадр. Указание вроде «в двух кадрах из пяти он смотрит мимо» — это записка режиссёру: она попадает в промпт дословно и работает как шум. Сколько кадров отвернуто, решает раскадровка, а не карточка."
+  },
+  "camera_default": "shot on a full-frame camera with a fast prime lens at eye level, natural perspective, depth of field shallow enough to lift him off the room but not so shallow that the trade behind him disappears",
+  "_camera_default": "Умолчание, а не закон: почти каждая ячейка объявляет свою оптику. Глубина резкости здесь оговорена отдельно, потому что у этого персонажа фон — не декорация: пекарня, двор и стол объясняют его не хуже лица, и размыть их в кашу значит потерять половину кадра.",
+  "realism_clause": "coarse facial texture with the grain of the skin and the roots of the stubble reading, uneven blotchy tone across the face, a working shine on the forehead and the nose and never a matte powdered face, cotton and denim with real creases and pressure folds, slight optical softness toward the frame corners, natural unretouched skin",
+  "_realism_clause": "Хвост, который цепляется к КАЖДОМУ промпту, и поэтому в нём нет ничего сценического: мука, пот и жар живут в ячейках, а не здесь, иначе они поедут и на огород, и за стол. Сформулирован в положительном ключе намеренно — krea2 Turbo работает на cfg 1.0, а при cfg 1.0 негативный промпт не действует вообще, и «no plastic skin» не делает ничего. ПОРЫ ЗДЕСЬ НЕ ТРЕБУЮТСЯ ВТОРОЙ РАЗ: они уже потребованы в age_markers, который едет в каждый промпт, а дубль при cfg 1.0 — это удвоенный вес и кадр, уехавший в подчёркнутую фактуру.",
+  "forbidden_as_positive": {
+    "_": "Каждый пункт — переформулировка запрета в требование, потому что при cfg 1.0 запрещать нечем.",
+    "__": "Пункты не пересекаются ни с identity_core, ни с realism_clause: там нетронутая кожа и фактура уже потребованы, и повтор стоил бы удвоенного веса. Здесь остаётся только то, чего больше нигде нет.",
+    "no_monochrome": "full natural colour, ruddy warm skin against the cold greys and greens of steel, tile and concrete",
+    "no_young_face": "a man clearly in his late fifties, worn by shift work and unaltered"
+  },
+  "anchor": {
+    "image": null,
+    "face_model": null,
+    "embedding": null,
+    "_": "ЯКОРЬ НЕ ВЫБРАН — стадия кастинга не запускалась. Пустые поля здесь не забывчивость: ворота идентичности при них честно говорят NOT_MEASURED вместо числа, и это ровно то, что должно быть видно. Заполняется одним прогоном scripts/generate.py --casting и выбором одного кадра глазами."
+  }
+}

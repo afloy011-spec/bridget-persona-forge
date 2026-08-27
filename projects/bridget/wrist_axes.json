@@ -1,0 +1,101 @@
+{
+ "_": "Оси ТАТУ-ПЛОЩАДОК: кадры, где тыльная сторона ЛЕВОГО запястья надёжно повёрнута к камере, голая и без часов.",
+ "_why": "Тату легла на 4 кадра из 100. Отказы: 21 — левой руки в кадре нет, 11 — запястье повёрнуто ладонью, 10 — МОДЕЛЬ НАРИСОВАЛА ПРАВУЮ руку вместо левой. Узкое место не в нанесении надписи, а в том, что нужная поверхность не попадает в кадр.",
+ "_mechanics": "МЕХАНИКА, РАЗОБРАННАЯ ПО НАШИМ ЖЕ ЗАМЕРАМ. Тыл кисти поворачивается к объективу принудительно, когда ЛАДОНЬ ВО ЧТО-ТО УПЁРТА: в столешницу (W02, 82%), в стекло (S4_r01, 97%), в собственный висок (W03, 100%). Расслабленная рука «loosely near her cheek» даёт ребро и 54% (W01, отказ). Поэтому в каждой ячейке ладонь имеет НАЗВАННЫЙ контакт, а предплечье — прямую линию в плоскости кадра: метрика требует вытянутости, и облако без оси она отвергает.",
+ "_left_hand": "КАК ЗАКРЕПИТЬ ЛЕВУЮ РУКУ, НЕ ГОВОРЯ «LEFT». Слово не работает: в 10 кадрах из 100 модель взяла правую. Приёмы: (1) правая рука ЗАНЯТА названным предметом и на ней часы с браслетом — тогда голое запястье остаётся ровно одно; (2) относительная ссылка «her other arm» идёт ПЕРЕД абсолютной; (3) «camera left/right», а не «left-hand side» — подстрока «left hand» рядом с рукой сбивает модель; (4) предмет с априорной рукой (перо в правой).",
+ "_no_metal": "Часы и браслет посажены на ПРАВОЕ запястье намеренно: они работают и как замок стороны, и как гарантия, что на левом запястье металла нет — сегментация по тексту ловит его отдельно и даёт отказ.",
+ "seeds_per_cell": 3,
+ "base": "a candid photograph of a real woman, a 51-year-old woman with green-hazel eyes, thin upper lip and fuller lower lip, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, a woman clearly in her early fifties, mature and unaltered",
+ "cells": [
+  {
+   "id": "T01",
+   "plan": "bust",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "close in from the chest up, leaning on a kitchen counter in the morning, her right hand wrapped around a mug held up near her collarbone at camera left, well away from her other arm, her other arm — the free one, her LEFT — coming into the frame from camera right and laid flat along the near edge of the counter in the foreground close to the lens, the palm down on the wood and the whole back of that hand and that wrist rolled up toward the camera, the fingers together and settled on the counter, the forearm one straight line across the picture from the knuckles to the elbow with both inside the frame, the sleeve of her camel sweater turned back well above the elbow so that forearm and wrist are bare skin with nothing over them, her chin dipped toward that hand with both eyes still on the lens, flat overcast daylight from a large window, pale tiles and a kettle behind her thrown gently out of focus, that hand still and settled with its weight down on the counter, her face and that forearm the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Прямой ремейк W02 (единственный заказанный успех, surface 82%, occluded 0.00, arm_width 0.137). Семья «ладонь плашмя на горизонтали ниже линии камеры». Смотреть: surface_frac >= 0.70, elongation >= 2.0, size*W >= 153 px (IPD должен выйти >= 129 px — его и проверять первым), cloth <= 0.5 по рукаву свитера. Главный риск ячейки — кашемировый рукав сползает на запястье: если cloth > 0.5, менять свитер на рубашку с отвёрнутым манжетом, а не переписывать позу."
+  },
+  {
+   "id": "T02",
+   "plan": "half",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "close in from the chest up at a cafe table by the window, writing a postcard with a fountain pen held in her right hand at camera left, her other arm — the free one, her LEFT — coming into the frame from camera right and laid along the near edge of the table in the foreground close to the lens, the flat of that hand pressing the card down on the table so the palm is on the paper and the whole back of that hand and that wrist face up at the camera, the fingers together and still, the forearm one straight line across the picture from the knuckles to the elbow with both inside the frame, the sleeves of her oatmeal linen shirt turned back well above both elbows so that forearm and wrist are bare skin with nothing over them, the camera close and just above the table top, she has stopped mid-word and looked up into the lens, soft window light from camera left, a cafe interior thrown out of focus behind her, that hand resting still on the card, her face and that forearm the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Самый сильный неречевой замок стороны во всём поле: письмо имеет огромное априори правой руки, а вторая рука при письме физически обязана лежать плашмя и держать бумагу. Риск кривой кисти уходит на руку с пером, то есть на некритичную. Смотреть: «модель взяла не ту руку» здесь не должно появиться ни разу — если появилось, замок мёртв и его надо снимать со всех десяти. Второе: взгляд поднят в объектив нарочно (у W02 IPD добирался на опущенном взгляде впритык)."
+  },
+  {
+   "id": "T03",
+   "plan": "bust",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "close in from the chest up, standing at a tall hotel window streaked with rain, her right hand holding a mug of tea against her chest at camera left, well away from her other arm, her other arm — the free one, her LEFT — reaching out to the glass at camera right with the palm pressed flat on it at shoulder height and some of her weight leaning into that hand, the fingers together on the wet glass and the whole back of that hand and that wrist turned to the camera, the forearm level and straight across the picture from the knuckles to the elbow, both inside the frame, the sleeve of her grey ribbed top turned back well above the elbow so that forearm and wrist are bare skin with nothing over them, the camera inside the room, close and square on to that arm, her face turned back to the lens with a small closed smile, cool grey afternoon light through the wet glass, a dim quiet room behind her, the hand held flat and still against the glass, her hand and her face the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Физика случайного успеха S4_r01 (97%) без зеркала: ладонь прижата к плоскости, которая смотрит в объектив, значит тыл кисти обязан быть виден. Камера ОБЯЗАНА стоять с той же стороны стекла, что и ладонь, — это записано в промпте («the camera inside the room»), при перестановке ячейка ломается в ноль. Смотреть: elongation (рука должна лежать поперёк кадра, а не уходить в стекло) и scale_ratio 0.45-2.4."
+  },
+  {
+   "id": "T04",
+   "plan": "half",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "close in from the chest up through the open driver's window of a parked car, the camera outside at her eye level an arm's length away, her right hand up on the top of the steering wheel at camera left, well away from her other arm, her other arm — the free one, her LEFT — laid along the window sill in the foreground close to the lens at camera right, the palm down on the door and the whole back of that hand and that wrist rolled up toward the camera, the fingers together and settled over the sill, the forearm one straight line across the picture from the knuckles to the elbow with both inside the frame, her white shirt sleeve turned back well above the elbow so that forearm and wrist are bare skin with nothing over them, she has turned her head out through the window to the lens, squinting slightly in the light, bright flat overcast daylight, a blurred street behind the car, that arm resting still on the sill, her face and that forearm the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Лучший аргумент по крупности во всей сетке: кадр в открытое окно машины физически не бывает общим, значит IPD набирается сам, а порог 153 px по надписи — это ровно IPD >= 128.6 px. Борт двери задаёт прямую и не даёт положить руку иначе как ладонью вниз. Смотреть: не обрезан ли локоть нижним/правым краем (класс «кусок предплечья не вытянут») и не залез ли на площадку край рукава."
+  },
+  {
+   "id": "T05",
+   "plan": "half",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "close in from the chest up, standing in her own doorway just home, her right hand holding a pair of heeled shoes by the straps down at camera left, well away from her other arm, her other arm — the free one, her LEFT — raised at camera right with the palm laid flat on the FRONT face of the door frame at shoulder height, the face of it that looks at the camera, the fingers together on the painted wood and the whole back of that hand and that wrist facing the lens, the forearm running straight up the frame from the elbow to the knuckles with both inside the picture, her sleeve turned back well above the elbow so that forearm and wrist are bare skin with nothing over them, the camera close and square on to the doorway, warm hallway light behind her and cooler light on her face, she is looking straight down the lens with a tired half-smile, the hand flat and still on the wood, her face and that hand the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Вертикальная ось предплечья: вытянутость берётся длиной вверх по косяку, а не поперёк кадра, поэтому отказ по elongation в T01/T02/T04 не заберёт заодно и эту. Критична одна формулировка — «FRONT face of the door frame»: ладонь на внутренней грани косяка даёт руку РЕБРОМ, на передней — тылом. Смотреть: surface_frac и то, что кисть на месте (без кисти отказ безусловный)."
+  },
+  {
+   "id": "T06",
+   "plan": "portrait",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "a head-and-shoulders frame shot from close range on a terrace at the end of the day, her right hand holding a pair of sunglasses down by her hip at camera left, well away from her other arm, her other hand — the free one, her LEFT — raised at camera right with the fingertips already in her hair behind her ear and the hand come to rest there, the palm turned in against her head so the whole back of that hand and that wrist face the lens, the forearm running straight up beside her jaw in the plane of the picture with the elbow held out and inside the frame, her sleeve turned back well above the elbow so that forearm and wrist are bare skin with nothing over them, low golden sun from behind the camera, blurred greenery behind her, direct eye contact and a half-smile, the raised hand settled and still, her face and that raised hand the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Ремейк W03 — единственного стопроцентного кадра пула (arm_width 0.165, самая широкая рука). Разница с провалившимся W01 (54%, ребро) ровно в одном: конкретное действие «fingertips already in her hair» вместо «raised loosely near her cheek»; слово loosely в эту ячейку возвращать нельзя. Добавлено против замеренного брака у поднятой руки: локоть явно посажен внутрь кадра и предплечье названо прямой в плоскости картинки (на кадре с рукой у волос кусок выходил 194x160 px, то есть без оси)."
+  },
+  {
+   "id": "T07",
+   "plan": "portrait",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "a head-and-shoulders frame shot from close range at a restaurant table in the evening, her right hand turning the stem of a wine glass on the table at camera left, well away from her other arm, her other hand — the free one, her LEFT — laid flat on her own collarbone with the fingers together and the palm against her skin, the whole back of that hand and that wrist turned out at the lens, the elbow held out wide at camera right so the forearm lies across the front of her chest flat to the picture rather than pointing at the lens, one straight line from the knuckles to the elbow with both inside the frame, a short-sleeved deep navy silk top with the sleeve turned back above the elbow so that forearm and wrist are bare skin with nothing over them, warm even restaurant light with no hard highlights on her skin, out-of-focus lamps and a dark banquette behind her, listening to someone off frame with her head tipped and a small closed-mouth smile, the hand resting still on her collarbone, her hand and her face the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Ладонь на собственной коже — та же принудительная физика, что ладонь на стекле, но без опоры и предмета: чтобы лечь на ямку между ключицами, кисть обязана повернуться ладонью к себе. Единственная механика семьи, работающая при ФРОНТАЛЬНОМ лице, то есть IPD не теряется на повороте головы. Ключевая правка против исходной версии этой идеи: локоть отведён ШИРОКО вбок, чтобы предплечье легло поперёк картинки, а не пошло к объективу (иначе elongation < 2.0). Смотреть именно elongation."
+  },
+  {
+   "id": "T08",
+   "plan": "portrait",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "a head-and-shoulders frame shot from close range in the doorway of a bright office, her right hand holding a bunch of keys and a folded jacket down at camera left, well away from her other arm, her other hand — the free one, her LEFT — holding a phone flat against her left ear at camera right, the palm on the phone and the phone on her ear so the whole back of that hand and that wrist face the lens, her hair pushed back clear of that side and the wrist and forearm open below the ear, the forearm running straight up to her ear in the plane of the picture from an elbow held out and inside the frame, her sleeve turned back well above the elbow so that forearm and wrist are bare skin with nothing over them, the hand pressed steady and still against her ear, flat daylight from a window behind the camera, a corridor out of focus behind her, listening hard with her eyes narrowed and her mouth closed, her face and that hand the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Телефон У УХА — противоположность телефону в вытянутой руке, который в пуле дал 43-62% на четырёх дублях подряд (сжатая на корпусе кисть = ребро). Здесь ладонь обязана лечь на корпус, а корпус на голову. Единственная ячейка сетки на непроверенной механике, поэтому стоит одна, а не двумя. Смотреть: не закрыли ли волосы кисть (кусок мельче MIN_PART 3.0e-4 доли кадра разметка не считает рукой) и не ушло ли предплечье в глубину (elongation)."
+  },
+  {
+   "id": "T09",
+   "plan": "bust",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "close in from the chest up, sitting sideways on a low sofa with one shoulder against the cushions, her right hand holding a closed paperback down against her knee at camera left, well away from her other arm, her other arm — the free one, her LEFT — laid along the top of the sofa back in the foreground close to the lens at camera right, the palm down on the upholstery and the whole back of that hand and that wrist rolled up toward the camera, the fingers together and settled over the edge, the forearm one straight line across the picture from the knuckles to the elbow with both inside the frame, the sleeve of her black linen top turned back well above the elbow so that forearm and wrist are bare skin with nothing over them, her head tipped toward her own arm so her face rests a hand's width from it, warm lamplight from behind camera left, a dark wall behind her, direct eye contact, that arm heavy and still on the sofa back, her face and that forearm the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Механика W02, поднятая с высоты столешницы на высоту плеча сидящего человека: рука и КРУПНОЕ лицо помещаются в один погрудный кадр — это развязка конфликта «читаемая надпись против запаса поля», на котором в пуле умерло 16 кадров из 100. Смотреть: cloth (мягкая обивка и тёмный лён рядом с кожей — главный источник ложного «не кожа») и hand_gap — кисть должна примыкать к предплечью, а не висеть отдельным пятном за краем спинки."
+  },
+  {
+   "id": "T10",
+   "plan": "half",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "close in from the chest up in a train seat by the window, the camera in the seat opposite and slightly above her, her right hand holding a paper cup steady on the little table at camera left, well away from her other arm, her other arm — the free one, her LEFT — laid flat along the window ledge in the foreground close to the lens at camera right, the palm down on the ledge and the whole back of that hand and that wrist rolled up toward the camera, the fingers together and resting over the lip of the ledge, the forearm one straight line along the ledge from the knuckles to the elbow with both inside the frame, the sleeve of her navy knit turned back well above the elbow so that forearm and wrist are bare skin with nothing over them, flat grey daylight off the window, fields sliding past out of focus beyond the glass, she has turned her face back to the lens, calm, that arm still and settled on the ledge, her face and that forearm the same distance from the lens and both in focus",
+   "tattoo_visible": true,
+   "_checks": "Третья горизонтальная опора и единственная дорожная сцена: узкая полка вагона — поверхность, на которую руку кладут ладонью вниз машинально, и она сама выпрямляет предплечье. Камера с противоположного сиденья и чуть выше смотрит на тыльную поверхность в лоб. Смотреть: scale_ratio (рука на переднем плане, лицо чуть дальше — при сильном расхождении вклейка отменяется полосой 0.45-2.4) и что размытый пейзаж за стеклом не утащил руку в смаз."
+  }
+ ]
+}

@@ -1,0 +1,136 @@
+{
+ "_": "Оси ДОМАШНИХ АЙФОН-КАДРОВ. Отдельный файл, а не правка dataset_axes: та сетка снята и на ней обучена лора, менять её задним числом значит разойтись с тем, что реально в весах.",
+ "_why": "Заказчик: «давай сделаем новые кадры, что-то вроде фото домашние на айфон и проверим». Проверяется этим не только вид кадра, но и измеренный долг лоры: во всех десяти кадрах P1-P5 у неё одна и та же длинная глянцевая укладка — и на корте в движении, и лёжа на полу с собакой.",
+ "_base_changes": "БАЗА ОТЛИЧАЕТСЯ ОТ dataset_axes.base ДВУМЯ ПРАВКАМИ, обе по делу.\n1. Убрано «the same woman as in the reference»: референса больше нет, лицо лежит в весах лоры (models.character_lora). Фраза про референс в промпте без референса — это указание модели на то, чего в кадре нет.\n2. Убрано описание ВОЛОС («long layered warm mid-brown hair lightening to sun-blonde ends»). Оно стояло в общей части, то есть повторялось в каждом из 50 кадров датасета — ровно так укладка и стала для лоры свойством человека наравне с формой носа. Здесь причёска задаётся ЯЧЕЙКОЙ и в каждой своя; общая часть про волосы молчит.\n3. Убрана клауза «scattered grey strands at the temples and along the parting». Седина — верный признак возраста, но эта формулировка требует ВИДИМОГО ПРОБОРА в каждом кадре, а половина новых ячеек прячет волосы под полотенце, бандану, шапку или собирает их в пучок. Общая часть не имеет права требовать того, что ячейка отменяет: они дерутся внутри одного промпта, и выигрывает обычно общая часть, потому что повторяется.",
+ "seeds_per_cell": 3,
+ "_seeds": "Три, а не один: разброс сидов внутри ячейки доходит до 0.26 по косинусу, и лучший из трёх даёт +0.043 против одного — самый сильный рычаг из всех замеренных.",
+ "base": "a candid photograph of a real woman, a 51-year-old woman with green-hazel eyes, thin upper lip and fuller lower lip, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, a woman clearly in her early fifties, mature and unaltered",
+ "cells": [
+  {
+   "id": "H01",
+   "plan": "portrait",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "a head-and-shoulders frame in bed a minute after waking, her hair slept flat on one side with a pressed ridge above the ear and static flyaways at the crown, a pillow crease printed across one cheek, propped on one elbow with the duvet bunched under her chin, eyes narrowed against the light, her face bare with the skin left exactly as it is and her lashes undarkened, wearing a grey marl t-shirt gone thin at the neck, bare ears and bare wrists, first light through a half-closed blind striping the wall behind her, a red blanket shoved to the foot of the bed, taken on her own front camera held close and a little above her, her eyes on her own small picture at the bottom of the screen, the near lens making her nose larger and her ears fall away, the crumpled sheet as sharp as she is, the shadows lifted until the picture reads flat and slightly grey, her pores and the lines at her outer eye corner resolved through it, the frame tipped a few degrees",
+   "_hair": "примята сном с одной стороны, ребро залома над ухом, статика на макушке",
+   "_checks": "Опорная измеримая ячейка: волосы распущены и линия роста открыта, значит hair_root_drop и hair_tone СЧИТАЮТСЯ и дают точку отсчёта для всех остальных. Проверяет самое дешёвое состояние, которого нет ни в одной из 63 ячеек (после сна), фронтальную камеру (её в пуле нет вообще) и голое лицо со складкой от подушки — прямой рычаг возраста. Самый крупный холст: максимальный IPD, фактура кожи читается лучше всего."
+  },
+  {
+   "id": "H02",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "a head-and-shoulders frame at the bathroom basin straight out of the shower, her hair wrapped up in a twisted white towel turban with damp strands escaping at both temples and one stuck flat to her cheek, working cream into one cheekbone with two fingers, jaw slack with concentration, glancing at the lens for a second, her face bare and still pink from the hot water with the skin left as it is, wearing a teal checked pyjama top with a wet patch on one shoulder, bare wrists, a shelf behind her crowded with an orange comb and half-squeezed tubes, the ceiling light on and grey morning daylight through the frosted window, the phone in her other hand held low just below her chin so the wide lens looks up along her jaw and neck, the tiles and the shelf as sharp as she is, the picture flat and a little cool where the phone opens up the shadows, the creases on her neck and the pores across her nose clearly resolved, her head hard against the left edge",
+   "_hair": "полностью убраны под скрученный тюрбан из полотенца, влажные пряди у обоих висков",
+   "_checks": "Решающая проверка долга: волос в кадре почти нет. Если лора всё равно вытащит из-под полотенца свою длинную укладку — причёска сидит в весах и лечится только датасетом. Ворота волос здесь заведомо вернут NOT_MEASURED, это план, а не брак. Вторая задача — возраст: ракурс снизу вдоль челюсти и шеи плюс распаренная кожа без косметики (работает и против skin_smooth)."
+  },
+  {
+   "id": "H03",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "chest up at the desk in the back room during a mid-morning video call, her hair two days unwashed and pushed behind both ears, flat and separated at the roots with the ends dry and dull, reading glasses pushed up on top of her head, mid-sentence with one hand raised explaining something and her eyes down on the screen just below the lens, wearing a lilac fleece top with the zip half undone, bare wrists, a printer and a row of red ring binders behind her, the ceiling light on because the morning is dark and the screen laying a cool wash up under her chin, the phone leaning against a stack of books so it looks up at her from below, her raised hand smearing a little while her face stays sharp, the binders and the far wall as sharp as she is, the contrast flattened where the phone lifts the dark side of the room, the grey along her parting and the texture on her forehead resolved, the top of her head cut off by the upper edge",
+   "_hair": "два дня немытые, заправлены за оба уха, плоские и разделённые у корней, концы сухие и без блеска",
+   "_checks": "Самая прямая словесная атака на выученный глянец: не другая укладка, а грязные волосы. Плюс три вещи разом, которых нет в пуле: видеозвонок, взгляд НЕ в объектив (на экран под линзой) и очки для зрения (сдвинуты на макушку). Телефон, прислонённый к стопке книг, даёт ракурс снизу под подбородок — рычаг возраста."
+  },
+  {
+   "id": "H04",
+   "plan": "portrait",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "a head-and-shoulders frame looking up the staircase at her where she sits on the third stair with the late morning post in her lap, her hair shoved into a low twist at the nape held with a covered elastic so the pulled-tight parting and the grey at her temples read plainly, holding one envelope out at arm's length and squinting at the small print over the top of the reading glasses slid down her nose, her forehead creased and her eyes on the paper, her face bare with the skin left as it is, wearing a brown ribbed jumper worn thin at the elbows over old jeans, the slim gold watch on her right wrist, a green carpet runner on the stairs, hard light from the ceiling fitting straight overhead putting short shadows under her brows and jaw, taken by whoever came to see what had arrived, the phone held low so the wide lens tips up at her, the banister rails and the landing above as sharp as she is, the shadows opened until the picture reads flat, the lines around her mouth resolved",
+   "_hair": "низкий тугой жгут на затылке под тканевой резинкой, натянутый пробор открывает седину у висков",
+   "_checks": "Стенд возраста: очки на кончике носа, прищур на мелкий шрифт, жёсткий верхний свет, открытый лоб, ноль косметики — все замеренные рычаги в одном кадре, чтобы понять, сколько лет вообще покупают слова. Сравнивать её медиану genderage против H01/H07 на тех же сидах. Взгляд на бумагу, снимает живой человек из холла — повод для кадра есть."
+  },
+  {
+   "id": "H05",
+   "plan": "half",
+   "w": 1152,
+   "h": 896,
+   "prompt": "a horizontal waist-up frame lifted from a phone video, she crosses the hall at midday mid-stride with a laundry basket against one hip, her hair pinned at the sides with two crossed grips and the rest swinging with the step, talking to the old grey dog standing by the door with her eyes down on it and her mouth open on a word, wearing a grey zip fleece over leggings and thick odd socks, bare wrists, a red coat and a canvas bag overloading the hooks behind her, flat midday light through the glass of the front door mixing with a yellow hall bulb, taken from the kitchen doorway by someone filming her, the hand steadying the basket smeared with the movement while her face stays sharp, the upright edge of the door frame leaning slightly, everything from the basket to the coat hooks in focus, the picture flattened where the phone lifts the dark end of the hall, the pores on her nose still resolved, the horizon a degree off level",
+   "_hair": "заколота по бокам двумя крест-накрест невидимками, остальное качается на шаге",
+   "_checks": "Новый НОСИТЕЛЬ, которого нет ни в одной ячейке проекта: кадр, вытащенный из телефонного видео. Смаз адресован только кисти на корзине, лицо затребовано резким — контроль того, держится ли face_sharp>=118 при движении. Первая из трёх горизонталей. Взгляд на собаку, а не в объектив; заколки-невидимки — ещё одно неснятое состояние волос."
+  },
+  {
+   "id": "H06",
+   "plan": "half",
+   "w": 896,
+   "h": 1344,
+   "prompt": "waist up at the hob with one hand on the pan handle, her hair clipped up off her neck in a plastic claw clip with the ends fanning out above it and two loose pieces left down at her face, her head turned to whoever has just walked into the kitchen and her eyebrows up mid-answer, looking straight at them, steam coming up past her cheek, her face bare and shining a little with the heat, wearing a striped canvas apron over a faded plum long-sleeved top with the sleeves shoved up, the slim gold watch on her right wrist, a red kettle and a board of carrot ends on the worktop behind her, warm strip light under the cupboards against a lunchtime window burnt to plain white, taken at their eye height on the wide lens as they came through the door, the worktop and the far wall as sharp as she is, the contrast flattened where the phone holds the window and the room at once, the pores across her cheek and the loose hairs at her neck resolved, her shoulder clipped by the near edge",
+   "_hair": "поднята крабиком, концы веером над зажимом, две свободные пряди у лица",
+   "_checks": "Готовка как класс в пуле отсутствует. Крабик — единственное собранное состояние, которое ОСТАВЛЯЕТ пряди у лица с обеих сторон, поэтому ворота корней и тона здесь считаются: измеримая половина набора не должна состоять только из распущенных. Выбитое в белое окно против тёплой подсветки под шкафами проверяет хрому и телефонное ГРИП. Повод для кадра: кто-то вошёл в кухню."
+  },
+  {
+   "id": "H07",
+   "plan": "full",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "a full-length frame from two steps inside the box room, she sits on the floor with her legs folded to one side and a crate of old paperwork open in front of her, her hair loose in a middle parting with one side tucked behind her ear and the other falling forward as she leans over the crate, the grown-out grey plain along the parting, both hands lifting a bundle out of it, her head down and her eyes on the paper, wearing navy tracksuit bottoms and a moss-green sweatshirt gone bobbly at the cuffs, bare feet, a blue suitcase and stacked picture frames along the wall, one bare bulb overhead and grey afternoon light from a small window, taken by whoever asked what she was looking for, the phone held low and close enough that she fills the height of the frame while the floorboards stretch toward the camera, the crate and the skirting as sharp as she is, the dim corners opened up until the picture reads flat, the lines at her eyes and the tendons on the backs of her hands resolved, the frame leaning to one side",
+   "_hair": "распущены на центральный пробор, одна сторона за ухом, другая падает вперёд; отросшая седина по пробору видна сверху",
+   "_checks": "Первый из двух ростовых планов, и он же — замер границы: при min_face_ipd_px 100 ростовой кадр обычно даёт ~72 px и слепнет по обязательным sharp/skin. Страховки заложены прямо в промпт: компактная сидячая поза, самый большой холст и камера в двух шагах, «она заполняет высоту кадра». Если IPD всё равно не набирается — это доказанный потолок ростового плана, а не брак ячейки. Волосы при этом полностью измеримы (пробор открыт сверху), руки заняты бумагами, взгляд вниз."
+  },
+  {
+   "id": "H08",
+   "plan": "half",
+   "w": 1344,
+   "h": 896,
+   "prompt": "a horizontal waist-up frame taken from the doorway of the utility room while she pegs a sheet onto a folding rack, her hair knotted into a bun with a pencil pushed through it and pieces fallen down at her nape, both arms up and her hands smeared by the movement while her face stays sharp, half turned toward the door with her eyebrows up mid-sentence and her eyes on whoever is there, wearing a blue checked flannel shirt with the sleeves shoved to the elbow over navy joggers, an overflowing basket on the floor and a tub of yellow pegs beside her, grey afternoon light from a small window fighting the yellow ceiling bulb so the colours split cold on one side and warm on the other, held at the shooter's eye height on the wide lens with the dark edge of the door frame cutting into the near corner, everything from the basket to the far wall in focus, the shadows lifted until the contrast goes flat, the pores on her forearms and the creases at her eyes clearly resolved, her body cut by the right edge",
+   "_hair": "скручены в пучок с продетым карандашом, пряди упали на затылке",
+   "_checks": "Кадр, снятый другим человеком из дверного проёма — самый частый повод домашнего фото; тёмный край косяка в ближнем углу как физический признак телефона. Смаз только в поднятых кистях при резком лице: вторая контрольная точка face_sharp на движении. Горизонталь 1344x896, расщеплённый свет (холодное окно против жёлтой лампочки) держит hue_entropy и colourfulness."
+  },
+  {
+   "id": "H09",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "a chest-up frame looking down at her while she kneels to scrub the front of the oven late in the afternoon, her hair tied back under a red cotton bandana knotted at the front so her temples and the grey along her hairline show, one rubber-gloved hand flat on the oven door and the other holding a cloth, she looks up at the camera mid-scrub with a flat unimpressed expression and a strand stuck to her damp forehead, her face bare and flushed with the skin left as it is, wearing an old t-shirt marked with bleach spots and cut-off tracksuit bottoms, a blue bucket and a pulled-out oven shelf on newspaper beside her, the kitchen ceiling light hard overhead so her cheekbones and the lines on her neck catch it, taken by the person standing over her with the phone held high on the wide lens so the floor tiles stretch away at the bottom, the bucket and the far skirting as sharp as her face, the shadows opened until the picture reads flat, her pores and the lines around her mouth resolved through the shine, the frame slightly rotated",
+   "_hair": "убраны под красную хлопковую бандану, узел спереди, виски и седина по линии роста открыты",
+   "_checks": "Самый дальний от студии регистр: грязная работа, перчатки, пятна отбеливателя. Резиновая перчатка упрощает кисть до силуэта — сознательный обход худшего класса отказа. Съёмка сверху вниз стоящим человеком (в пуле сверху вниз снято только спокойное позирование) плюс жёсткий верхний свет и открытая линия роста работают на возраст. Ворота волос дадут FAIL/NOT_MEASURED — это план."
+  },
+  {
+   "id": "H10",
+   "plan": "full",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "a full-length frame through the open balcony door at dusk, she stands at the airer unpegging a dry towel with both hands and a bundle of washing over one forearm, her hair up in a short stubby ponytail with a fabric elastic and wisps lifting in the cold air, her chin down and her eyes on the pegs, wearing a padded gilet over a deep blue cable jumper, jeans and garden clogs, a row of terracotta pots along the rail behind her, the sky gone dim blue while the kitchen light behind the camera lays a warm patch across her front, taken from indoors by someone standing at the table, the phone held a step inside the door so the frame boxes in the near edges and she fills the height of the picture, the whole balcony from the airer to the far rail in focus, the shadows lifted until the dark corner goes flat, her face sharp with the lines at her mouth and the tendons on her hands resolved, the frame a degree off level",
+   "_hair": "высокий короткий хвост-обрубок на тканевой резинке, пушок поднимается на холодном воздухе",
+   "_checks": "Второй ростовой план и единственные сумерки: проверяет хрому на границе света (тёплое пятно из кухни против синего неба) и то, держится ли лицо при полном росте. Дверной проём как рамка удерживает её крупной в кадре. Высокий хвост поднимает всю линию роста и меняет силуэт головы — в пуле есть только низкие хвосты. Взгляд на прищепки."
+  },
+  {
+   "id": "H11",
+   "plan": "bust",
+   "w": 896,
+   "h": 1152,
+   "prompt": "chest up in the narrow larder cupboard with her coat still on, her hair flattened by the knitted hat she has pushed back off her forehead with a few strands lifting in static where the collar rubbed them, lifting tins onto a shelf out of a paper bag, caught mid-sentence with somebody in the kitchen behind the camera and her eyes going to them a half beat late, her face bare and cold-pink with the skin left as it is, wearing a dark quilted coat open over a mustard roll-neck, shelves of jam jars and a string bag of onions, one bare bulb on a pull cord straight above her throwing short shadows under her brows while the early evening kitchen behind glows warmer, taken by whoever was already in the kitchen half a second later than they meant to press it so her free hand smears while her face stays sharp, the jars and the back of the cupboard as sharp as she is, the dark shelves lifted until the picture reads flat, the weave of the hat and the pores on her nose resolved, the frame leaning",
+   "_hair": "примяты вязаной шапкой, сдвинутой со лба назад; отдельные пряди стоят от статики у воротника",
+   "_checks": "Шапки нет ни в одной из 63 ячеек, и она даёт волосам механическую деформацию, а не другую укладку: сдвинутая назад шапка оставляет перед пробора открытым, поэтому тон ещё измерим. Носитель — «нажал на полсекунды позже, чем хотел»: смазана свободная кисть, лицо резкое. Верхняя лампочка на шнуре даёт короткие тени под бровями (возраст), тёплая кухня за спиной — вторая температура для хромы."
+  },
+  {
+   "id": "H12",
+   "plan": "half",
+   "w": 1152,
+   "h": 896,
+   "prompt": "a horizontal waist-up frame from the other end of the sofa in the evening, her hair pushed straight back off her face with a wide fabric headband so the whole hairline and the grey at her temples show while the rest lies flat and unbrushed on her shoulders, she sits cross-legged with a plate balanced on her knees and one hand steadying it, a forkful halfway up, her eyes still on the television off frame and her jaw working, wearing a rust cardigan done up on the wrong button over striped pyjama bottoms and slipper socks, a folded blanket, the remote and two mugs shoved along the sofa beside her, the television throwing shifting cold light across her face while a lamp behind the sofa keeps her other side warm, taken by the person sitting a metre away before she noticed, the phone low on the arm of the sofa, the whole room behind her in focus, the colours swinging between blue and yellow as the phone fights the screen and the contrast going flat, the pores on her forehead and the lines around her mouth resolved through it, over-sharpened along her shoulder",
+   "_hair": "зачёсаны назад широкой тканевой повязкой, посаженной за линию роста; остальное лежит плоско и нерасчёсано",
+   "_checks": "Повязка открывает всю линию роста и седину у висков — в базе они описаны, но под распущенной укладкой не видны ни на одном кадре пула. Самый трудный свет набора для ворот хромы: телевизор против лампы, цвет качается между синим и жёлтым — прямая проверка hue_entropy 0.34 / colourfulness 18. Взгляд в телевизор, кардиган застёгнут не на ту пуговицу, снял сидящий рядом. Третья горизонталь."
+  },
+  {
+   "id": "H13",
+   "plan": "portrait",
+   "w": 1280,
+   "h": 1600,
+   "prompt": "a head-and-shoulders frame of her sitting on the floor at the foot of the bed at night drying her hair after being caught in the rain, her head tipped over to one side and the hair lifting away from her neck in loose separated clumps under the blast, the roots still dark and heavy with damp while the dried ends further out are lighter and flying loose, the dryer in one hand held out from her head and her other hand flat on the carpet bracing her, her eyes half shut against the hot air and her face turned down toward the carpet, her face bare and flushed with the skin left as it is, wearing a washed plum cotton sleep t-shirt, a bedside lamp low on one side and the dryer flex running to the skirting board, taken from the doorway by whoever was passing, the phone held low on the wide lens, the chair of clothes and the skirting as sharp as she is, the shadows opened until the picture reads flat, her flying hair smeared with the movement while her face stays sharp with her pores and the creases at her eyes resolved",
+   "_hair": "полусухие, подняты и разорваны потоком фена на отдельные клоки; корни тёмные от влаги, высохшие концы светлее и разлетаются",
+   "_checks": "Единственный физический (а не уговорами) удар по признаку «волосы-ленты»: поток воздуха механически рвёт параллельность прядей, и метрика согласованности структурного тензора обязана просесть. Пара «тёмные влажные корни против сухих светлых концов» — буквально то, что меряет hair_root_drop, поэтому ячейка ещё и подтверждает окраску числом. Руки НЕ в волосах (фен на отлёте, вторая рука упирается в ковёр) — обход худшего класса отказа. Смаз отдан только волосам, лицо затребовано резким."
+  },
+  {
+   "id": "H14",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "a chest-up frame in the open back doorway late at night with a bin bag in one hand, her hair in a plait done for sleeping that has already gone fuzzy along its length with the end unravelling, she has turned back toward the door with her chin down and her eyes wide, a laugh just starting, her face bare with the skin left as it is, wearing an oversized navy hoodie over pyjama bottoms and unlaced trainers on bare feet, the phone flash going off from the kitchen door a couple of metres away, hard and flat on her front with a sharp black shadow of her shoulder thrown onto the door glass beside her, the yard behind her falling to solid black and a blue recycling box catching the light at the edge, the flash finding the shine on her forehead and every line at the outer corners of her eyes, everything inside the lit pocket sharp from her hand to the door frame, the flash resolving pores and single hairs rather than smoothing them, the frame tilted down to the right",
+   "_hair": "коса, заплетённая на ночь, уже распушилась по длине, кончик расплетается",
+   "_checks": "Вспышки телефона ДОМА ночью в пуле нет (только улица и вечеринка). Физический признак — плоская жёсткая тень плеча на стекле двери и провал фона в чёрное. Вспышка же вытягивает поры и линии, то есть страхует набор по face_sharp и против skin_smooth, если плоские HDR-кадры сядут к порогу 118. Коса взята как РЕЗУЛЬТАТ, а не как действие (плетение в процессе — гарантированные лишние пальцы)."
+  }
+ ]
+}

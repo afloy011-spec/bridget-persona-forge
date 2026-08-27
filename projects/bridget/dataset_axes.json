@@ -1,0 +1,463 @@
+{
+ "_": "Оси разнообразия датасета персонажной лоры. Каждая клетка — один эдит референса: тот же человек, другой кадр.",
+ "_why_diverse": "Лора выучивает то, что в датасете ПОВТОРЯЕТСЯ, и считает это свойством персонажа. Если все кадры сняты в один свет, лора выучит свет; если все анфас — выучит анфас и будет ломать любой другой ракурс. Поэтому повторяться обязано ровно одно — лицо, а всё остальное обязано меняться: план, поворот головы, свет, фон, одежда, выражение, занятие. Это не «для красоты», это единственный способ отделить в обучении человека от обстоятельств.",
+ "_axes": "Сетка строится по трём осям сразу, и клетки подобраны так, чтобы каждая была отдельной точкой, а не соседкой предыдущей.\n  СВЕТ (главная ось, 12 состояний): пасмурный ровный, окно сбоку мягко, жёсткое солнце в лоб, контровое солнце, золотой час, лампа накаливания, свеча, вспышка в лоб ночью, синий час, смешанный свет окна и лампы, офисные лампы, свет экрана снизу.\n  РАКУРС (7): анфас, три четверти влево, три четверти вправо, почти профиль, взгляд через плечо, сверху, снизу.\n  ПЛАН И ПОЗА (4 плана x занятие): портрет, по грудь, по пояс, в рост; стоит, идёт, сидит, опирается, тянется, смеётся, говорит по телефону, убирает волосы, пьёт кофе, наклоняется к собаке.\n  ТОЧКА СЪЁМКИ (8, клетки R): с земли снизу вверх, сверху вниз на лежащую, через дверной проём из тёмной комнаты, отражение в зеркале, из-за плеча, заваленный горизонт, через просвет между машинами, круто снизу под подбородок.\n  ДВИЖЕНИЕ (8, клетки M): шаг на весу с проводкой, резкий поворот со смазанными волосами, свитер через голову, потягивание к верхней полке со скруткой корпуса, бег за собакой, зажмуренный смех со вспышкой, посадка на стул до касания, ветер на набережной.\n  КАМЕРА И ОПТИКА (8, клетки K): 24 мм вплотную с искажением, 135 мм со сжатием плана, зерно 35 мм с ореолами, телефонный снимок с пережатым HDR, одноразовая камера со вспышкой и виньеткой, 85 мм на открытой дырке с одним резким глазом, камера наблюдения из угла, макро-кроп на половину лица.",
+ "_why_not_only_portraits": "Соблазн набрать сорок крупных портретов велик — на них лучше всего видно лицо, и косинус на них самый высокий. Но лора, обученная на одних портретах, на ростовом плане рисует чужого человека: она никогда не видела это лицо мелким. Планы поэтому смешаны намеренно, а отбор по косинусу ведётся ВНУТРИ каждого плана, а не по всему набору — иначе крупные кадры вытеснят все остальные.",
+ "_why_no_grade": "В указаниях нет ни грейда, ни плёнки, ни «cinematic»: датасет обязан быть настолько нейтральным, насколько получится. Всё стилистическое, попавшее в датасет, станет неотключаемым свойством персонажа, и снять его потом можно будет только переобучением.",
+ "_measured_refs": "КАКОЙ РЕФЕРЕНС КАКОМУ ПЛАНУ — ЗАМЕРЕНО, А НЕ ВЫБРАНО НА ВКУС. Два A/B на одних и тех же клетках, менялся только референс; полосы не пересеклись ни одним значением ни в одном из них.\n  ПЛАН half, 8 кадров против 8: кроп фигуры (лицо в нём ~100 px) даёт косинус к референсу 0.160-0.274, медиана 0.234 — это уровень старой сдачи, снятой текстом. Кроп ЛИЦА даёт 0.461-0.565, медиана 0.489. Зрячему энкодеру нечего взять с лица в сто пикселей.\n  ПЛАН full, 8 против 8: один референс (фигура) — 0.237-0.381, медиана 0.323; ДВА референса (фигура сценой, лицо субъектом, в порядке обучения лоры) — 0.431-0.595, медиана 0.515. Одним кропом лица тут не обойтись: рост, сложение и посадку плеч модель тогда придумает.\nОтсюда рабочая раскладка: portrait, bust, half — кроп лица; full — «фигура|лицо». Для сравнения: потолок этого материала (кроп лица против кропа фигуры на ОДНОМ И ТОМ ЖЕ листе референса) — 0.527, а старая сдача, снятая текстом, — 0.131-0.229.",
+ "_measured_ref_boost": "РУЧКА СХОДСТВА В ШАБЛОНЕ ГРАФА, НЕ ЗДЕСЬ, но знать про неё надо. Krea2EditModelPatch.ref_boost при умолчании 1.0 ВЫКЛЮЧЕН, и на выключенном эдит даёт узнаваемо чужое лицо. Замер, три сида на значение: 1.0 → 0.547, 2.0 → 0.646, 5.0 → 0.682, 8.0 → 0.750, 12.0 → 0.756, 20.0 → 0.721 (уже плющит кадр). В шаблоне стоит 8.0. Побочный эффект высокого значения: на общем плане он подтягивает и одежду референса, поэтому гардероб в клетках назван явно и подробно.",
+ "_why_age_markers_in_base": "Первый пробный прогон дал детектору возраст 35 и 45 при заявленном 51 — эдит молодит так же, как молодила генерация по тексту, и референс сам по себе этого не держит. Возрастные маркеры поэтому перенесены сюда из карточки дословно: возраст живёт в шее, кистях и коже, а не в числе. Замер повторяется скрином — колонка «возраст» в отчёте для того и печатается.\nРЕДАКЦИЯ ЗАМЕНЕНА НА ЗАМЕРЕННУЮ 14.08.2026. Прежняя была написана смягчениями («fine», «faint», «subtle», «softer»), а при cfg 1.0 смягчающее прилагательное читается как «почти нет». Числа: РЕФЕРЕНС даёт детектору возраст 51 в точности при заявленном 51, а кадры пула медиану 37 — то есть конвейер терял четырнадцать лет ещё до переноса лица (после переноса 34). Из замены выкинут один пункт, «thinner vermilion of the upper lip»: он повторяет «thin upper lip» выше, а дубль требования при cfg 1.0 это удвоенный вес.",
+ "_negative_is_alive": "krea2 в эдит-ветке идёт на cfg 1.5, а не 1.0, поэтому негативный обусловливатель работает — в отличие от t2i-шаблона, где он мёртв и все запреты приходится писать положительными требованиями. Общий негатив лежит в шаблоне графа.",
+ "seeds_per_cell": 2,
+ "base": "a candid photograph of the same woman as in the reference, a 51-year-old woman with long layered warm mid-brown hair lightening to sun-blonde ends, green-hazel eyes, thin upper lip and fuller lower lip, deep crow's feet fanning from both outer eye corners even at rest, pronounced nasolabial folds, clearly visible vertical lines above the upper lip, crepey texture on the lower eyelids, scattered grey strands at the temples and along the parting, loose skin on the neck with horizontal lines, prominent tendons and thinner skin on the backs of her hands, a sun-freckled décolleté, natural skin with visible pores across the nose and cheeks, a woman clearly in her early fifties, mature and unaltered",
+ "cells": [
+  {
+   "id": "D01",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "head and shoulders, facing the camera straight on, neutral expression, flat overcast daylight with no visible shadow direction, plain pale wall behind her, wearing a fine navy knit, calm and unsmiling, mouth relaxed"
+  },
+  {
+   "id": "D02",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "head and shoulders turned three-quarters to her left, looking into the lens, faint closed-mouth smile, soft window light from one side leaving the far cheek in gentle shade, a dim room behind her, wearing a white linen shirt, a small closed-mouth smile, eyes warm"
+  },
+  {
+   "id": "D03",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "head and shoulders turned three-quarters to her right, looking off past the camera, lips parted mid-sentence, warm tungsten lamplight from above and behind her, blurred kitchen shelves behind, wearing a grey cashmere sweater, mid-sentence, mouth open, eyebrows up, animated"
+  },
+  {
+   "id": "D04",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "near profile, chin slightly lifted, looking away from the lens, hard low afternoon sun raking from behind her so the rim of her cheek and nose burns bright and the face falls into shade, a bright street out of focus, wearing a camel coat collar up, distant and thoughtful, lips pressed"
+  },
+  {
+   "id": "D05",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "head tilted down, reading something out of frame, eyes lowered, cool light from a screen below her face lifting the underside of her chin and brows, dark room, wearing a black roll-neck, concentrated, brows drawn together slightly"
+  },
+  {
+   "id": "D06",
+   "plan": "portrait",
+   "w": 1152,
+   "h": 896,
+   "prompt": "head and shoulders low in a wide frame, laughing openly with her eyes creased shut, direct on-camera flash fired at night, flat harsh light, hard shadow on the wall right behind her, a dark garden beyond, wearing a black silk blouse, laughing out loud, head back, eyes creased shut"
+  },
+  {
+   "id": "D07",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "shot from slightly above, she looks up into the lens, chin down, one brow raised, soft north window light from the front, plain grey backdrop, wearing an ivory silk blouse with one button open, one brow raised, half-amused, skeptical"
+  },
+  {
+   "id": "D08",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "shot from below at chest height, she looks down at the lens, jaw and neck prominent, hard midday sun overhead throwing short shadows under the brow and nose, blue sky behind, wearing a white t-shirt, squinting into the light, mouth slightly open"
+  },
+  {
+   "id": "D09",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "glancing back over her shoulder toward the lens, hair swept to one side, warm golden hour sun low and behind her lighting the edge of her jaw and hair, a park path out of focus, wearing a beige trench coat, caught mid-turn, surprised, lips parted"
+  },
+  {
+   "id": "D10",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "facing the camera, one hand tucking hair behind her ear, small private smile, single candle flame just out of frame lighting one side of the face warm and leaving the other in deep shadow, dark restaurant behind, wearing a dark red dress, quiet private smile, eyes lowered"
+  },
+  {
+   "id": "D11",
+   "plan": "bust",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the chest up, arms out of frame, standing at a window in grey morning light, sheer curtain diffusing the light across her face evenly, wearing a fine navy knit, tired and unguarded, no expression at all"
+  },
+  {
+   "id": "D12",
+   "plan": "bust",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the chest up, collar turned up against the cold, breath faintly visible, outdoors on an overcast street with flat shadowless light, wearing a soft camel wool coat over a knit, cold, jaw set, blinking against the wind"
+  },
+  {
+   "id": "D13",
+   "plan": "bust",
+   "w": 1152,
+   "h": 896,
+   "prompt": "from the chest up, seated at a restaurant table, leaning slightly toward someone out of frame, warm low light from candles on the table lighting her from below, a dark green banquette behind, wearing a dark red silk slip dress, leaning in and listening, attentive, eyebrows raised"
+  },
+  {
+   "id": "D14",
+   "plan": "bust",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the chest up, hair tied back off her face in a low ponytail with strands escaping, bright flat overcast light on a covered sports court, green windscreen fencing behind, wearing a charcoal cotton tank top, breathing hard after effort, mouth open, focused"
+  },
+  {
+   "id": "D15",
+   "plan": "bust",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the chest up, on the phone with the handset at her ear, mid-conversation, mixed light — cool daylight from a window on one side and a warm desk lamp on the other, an office behind her out of focus, wearing a pale grey blouse, talking on the phone, mid-word, one hand gesturing"
+  },
+  {
+   "id": "D16",
+   "plan": "bust",
+   "w": 1152,
+   "h": 896,
+   "prompt": "from the chest up, holding a coffee cup with both hands near her chin, steam rising, overhead fluorescent light of a small cafe, flat and slightly green, wearing an oversized grey sweatshirt, sleepy, eyes half closed over the cup"
+  },
+  {
+   "id": "D17",
+   "plan": "bust",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the chest up, head turned in near profile to the left, looking out of frame, blue hour light after sunset, cool and even, a city balcony railing behind her, wearing a long dark cardigan, looking away, wistful, mouth soft"
+  },
+  {
+   "id": "D18",
+   "plan": "bust",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the chest up, chin resting on her hand, elbow out of frame, thinking, hard directional sun through a window throwing a bright rectangle across her shoulder and neck, wearing a white linen shirt, thinking, one eye slightly narrowed"
+  },
+  {
+   "id": "D19",
+   "plan": "half",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the waist up, one hand raised near her collarbone, standing in a sunlit room, hard shadows of a window frame falling across the wall and her shoulder, wearing a white linen shirt, reaching and stretching, effortful"
+  },
+  {
+   "id": "D20",
+   "plan": "half",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the waist up, turned away from the lens and glancing back over her shoulder, dim interior with one warm lamp behind her creating a rim on her hair and cheek, wearing a black roll-neck, glancing back, guarded, chin low"
+  },
+  {
+   "id": "D21",
+   "plan": "half",
+   "w": 1152,
+   "h": 896,
+   "prompt": "from the waist up, leaning on a kitchen counter with both forearms, weight on one hip, flat daylight from a window on the left, wearing a grey sweatshirt with sleeves pushed up, relaxed and mid-laugh, shoulders loose"
+  },
+  {
+   "id": "D22",
+   "plan": "half",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the waist up, holding a wine glass, mid-conversation with someone out of frame, warm restaurant light at night with candles and a dim green banquette behind, wearing a deep red dress, toasting, warm open smile, teeth showing"
+  },
+  {
+   "id": "D23",
+   "plan": "half",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the waist up, reaching up to take something from a high shelf, body stretched, cool overcast daylight through a large window, a bookshelf behind, wearing a striped cotton shirt, stretching upward, face turned away, strained"
+  },
+  {
+   "id": "D24",
+   "plan": "half",
+   "w": 1152,
+   "h": 896,
+   "prompt": "from the waist up, seated sideways on a chair with an arm over its back, relaxed, golden hour sun coming in low from the side and warming one half of the room, wearing a soft knit and jeans, sitting back, amused, arms open"
+  },
+  {
+   "id": "D25",
+   "plan": "half",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the waist up, tying her hair back with both hands raised, elbows out, bright even bathroom light from above, tiled wall behind, wearing a plain white vest top, concentrating on tying her hair, mouth pursed"
+  },
+  {
+   "id": "D26",
+   "plan": "half",
+   "w": 896,
+   "h": 1152,
+   "prompt": "from the waist up, shot from slightly above as she looks up from a book, cool north light from a window behind the camera, a quiet living room, wearing an oversized grey cashmere sweater, looking up from a book, mildly startled"
+  },
+  {
+   "id": "D27",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "the whole standing figure, walking on a city sidewalk seen from across the road, late afternoon sun low and warm behind her throwing a long shadow toward the camera, wearing a camel wool coat over a fine navy knit and slim trousers, walking briskly, purposeful, not looking at camera"
+  },
+  {
+   "id": "D28",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "the whole standing figure seen from a distance, standing still on a paddle tennis court, racket down at her side, flat bright overcast light with no shadows, wearing a charcoal sports top and leggings, still and waiting, hands on hips, impatient"
+  },
+  {
+   "id": "D29",
+   "plan": "full",
+   "w": 1344,
+   "h": 896,
+   "prompt": "the whole figure sitting on a sofa with her legs folded under her, an old grey greyhound leaning into her, warm lamplight from a floor lamp behind camera left and cool blue evening daylight from a window on the right, wearing a soft knit and jeans, smiling down at the dog, tender"
+  },
+  {
+   "id": "D30",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "the whole standing figure in a doorway, backlit so her face falls into soft shade and the doorframe burns bright behind her, cold blue daylight outside, wearing a long dark coat, silhouetted, face calm, looking out"
+  },
+  {
+   "id": "D31",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "the whole standing figure at night on a street, direct on-camera flash lighting her hard and dropping the background to black, wet pavement reflecting, wearing a black coat over a red dress, startled by the flash, eyes wide"
+  },
+  {
+   "id": "D32",
+   "plan": "full",
+   "w": 1344,
+   "h": 896,
+   "prompt": "the whole figure crouched down to a dog on a park path, side view, soft overcast morning light, wearing a quilted jacket and jeans, crouched and reaching to the dog, laughing"
+  },
+  {
+   "id": "D33",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "the whole standing figure leaning against a wall with one foot up, arms crossed, hard midday sun from directly above throwing a short dark shadow at her feet, wearing white trousers and a striped shirt, leaning, bored, looking off down the street"
+  },
+  {
+   "id": "D34",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "the whole figure walking away from the camera and turning her head back over her shoulder, golden hour sun ahead of her, long shadow behind, wearing a beige trench coat, turning back with a grin over her shoulder"
+  },
+  {
+   "id": "D35",
+   "plan": "full",
+   "w": 1344,
+   "h": 896,
+   "prompt": "the whole figure seated at a long table in a bright kitchen, elbows on the table, mixed light — a window on one side and warm pendant lamps above, wearing a pale grey blouse, listening across the table, chin on hand"
+  },
+  {
+   "id": "D36",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "the whole standing figure on a balcony at blue hour, city lights starting behind her, cool even ambient light with no sun, wearing a long dark cardigan over a slip dress, arms folded, cool and self-possessed"
+  },
+  {
+   "id": "W01",
+   "plan": "half",
+   "w": 1280,
+   "h": 1600,
+   "tattoo_visible": true,
+   "prompt": "seated at a cafe table, her right hand resting flat on the table top, her LEFT elbow on the table and her left hand raised loosely near her cheek with the BACK of that hand and the back of her left wrist turned toward the lens, left forearm bare to above the elbow, soft window light from camera left, warm wood and glass behind her thrown out of focus, wearing a short-sleeved ivory silk blouse, a half-smile, looking slightly past the lens"
+  },
+  {
+   "id": "W02",
+   "plan": "half",
+   "w": 1280,
+   "h": 1600,
+   "tattoo_visible": true,
+   "prompt": "close in from the chest up, leaning on a kitchen counter, her right hand holding a mug, her LEFT forearm laid along the counter in the foreground close to the lens with the back of the hand and the back of the left wrist facing up toward the camera, sleeve pushed above the elbow, flat overcast daylight from a large window, pale tiles behind her, wearing a camel cashmere sweater, caught mid-thought, looking down at her hand"
+  },
+  {
+   "id": "W03",
+   "plan": "bust",
+   "w": 1280,
+   "h": 1600,
+   "tattoo_visible": true,
+   "prompt": "her right hand holding a pair of sunglasses down at her side, her LEFT hand raised to tuck hair behind her ear, the back of that left hand and the back of her left wrist toward the lens close to her face, left forearm bare, golden hour sun from behind camera right, blurred greenery behind her, wearing a sleeveless deep navy top, direct eye contact, a half-smile"
+  },
+  {
+   "id": "R01",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "from ground level looking up along her body as she stands on a stone step, the camera almost at her knees, sky burning out behind her shoulder, hard midday sun, wearing a long camel coat, chin lifted, looking off past the lens"
+  },
+  {
+   "id": "R02",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "shot from directly above as she lies on a rug on the floor with a book, arms folded under her chin, warm lamp light from one side, the whole figure foreshortened by the top-down view, wearing a soft grey sweater and jeans, a private smile"
+  },
+  {
+   "id": "R03",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "seen through a doorway from a dark adjoining room, the door frame cutting the left third of the picture into black, she stands in the lit room beyond, cool north daylight on her, wearing an ivory silk blouse, caught mid-thought and unaware of the camera"
+  },
+  {
+   "id": "R04",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "her reflection in a bathroom mirror, the real shoulder blurred in the near foreground on the right, hard bare bulb above, wearing a navy tank top, looking at herself rather than at the lens, mouth relaxed"
+  },
+  {
+   "id": "R05",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "the camera behind her right shoulder and slightly above, she turns her head back toward it, the room ahead of her thrown out of focus, warm evening lamp light, wearing a deep wine cashmere sweater, one eyebrow raised"
+  },
+  {
+   "id": "R06",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "the camera tilted well off horizontal so the horizon runs diagonally, she fills the frame low and to one side, hard afternoon sun with a sharp shadow across her cheek, wearing a black roll-neck, unsmiling, direct eye contact"
+  },
+  {
+   "id": "R07",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "seen from across a street through the gap between two parked cars, the near car roof cutting the bottom of the frame, she walks past a shop window, flat overcast daylight, wearing a long dark cardigan, unaware of the camera"
+  },
+  {
+   "id": "R08",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "shot from just below her chin looking steeply up, the ceiling and a pendant lamp behind her head, warm tungsten light, wearing a fine navy knit, laughing with her head tipped back"
+  },
+  {
+   "id": "M01",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "caught mid-stride crossing a wet pavement, one foot off the ground, coat swinging open, the background smeared by a panning camera while she stays sharp, grey rainy daylight, wearing a long camel coat, looking ahead past the lens"
+  },
+  {
+   "id": "M02",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "turning sharply toward the camera so her hair is still swinging out and slightly blurred while the rest of her is sharp, hard sun from camera right, plain warm wall behind her, wearing a sleeveless ivory top, mouth open mid-word"
+  },
+  {
+   "id": "M03",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "pulling a jumper down over her head, the fabric still moving, hair static-charged and lifting, flat overcast light from a window, wearing a camel cashmere jumper, eyes closed, mid-laugh"
+  },
+  {
+   "id": "M04",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "reaching up and across to a high shelf, body stretched and twisted away from the camera, weight on the balls of her feet, cool daylight from a window behind her, wearing a fitted grey tee, concentrating"
+  },
+  {
+   "id": "M05",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "running a few steps down a garden path after a dog, both feet off the ground, motion blur in her hands and in the dog, golden hour sun low and behind, wearing jeans and a loose linen shirt, laughing openly"
+  },
+  {
+   "id": "M06",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "caught mid-laugh with her eyes screwed shut and her shoulders up, hair falling forward, direct on-camera flash at night, dark garden behind her, wearing a black silk blouse"
+  },
+  {
+   "id": "M07",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "sitting down onto a chair, caught in the moment before she lands, one hand on the chair back and the other still out for balance, warm restaurant light, wearing a wine-red slip dress"
+  },
+  {
+   "id": "M08",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "spinning to look behind her on a windy seafront, coat and hair pushed hard sideways by the wind, everything sharp except her hair, bright overcast light off the water, wearing a long dark coat"
+  },
+  {
+   "id": "K01",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "shot on a 24mm wide lens from close in, her near hand large in the foreground and her face smaller behind it, the room stretching away with visible wide-angle bending at the edges, cool window daylight, wearing a grey sweater, mid-sentence"
+  },
+  {
+   "id": "K02",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "shot on a 135mm telephoto from far across a room, the background compressed into a soft wall of bokeh right behind her head, warm lamp light, wearing an ivory blouse, still and unsmiling"
+  },
+  {
+   "id": "K03",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "a grainy 35mm film frame with visible halation around the highlights and slightly shifted colour, soft window light, wearing a navy knit, a half-smile, the grain coarse enough to see"
+  },
+  {
+   "id": "K04",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "a snapshot taken on a phone held at chest height, slightly crooked, over-sharpened by the phone processing with a hard HDR look in the shadows, kitchen with overhead lights, wearing a camel jumper, caught talking"
+  },
+  {
+   "id": "K05",
+   "plan": "full",
+   "w": 896,
+   "h": 1344,
+   "prompt": "a disposable-camera frame with a harsh built-in flash, heavy vignetting into the corners, colours pushed warm and slightly green, a party interior at night, wearing a black silk blouse, mid-laugh"
+  },
+  {
+   "id": "K06",
+   "plan": "bust",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "shot wide open on a fast 85mm so only her near eye is sharp and the far side of her face already falls out of focus, soft north window light, wearing an ivory silk blouse, direct eye contact"
+  },
+  {
+   "id": "K07",
+   "plan": "half",
+   "w": 1024,
+   "h": 1280,
+   "prompt": "a security-camera view from a high corner of a room, slightly fisheyed, cool fluorescent light, low contrast and a little soft, she stands by a counter unaware, wearing a grey sweater"
+  },
+  {
+   "id": "K08",
+   "plan": "portrait",
+   "w": 896,
+   "h": 1152,
+   "prompt": "a very close macro-like crop on the upper half of her face, skin texture and single hairs clearly resolved, shallow focus falling off past the near eye, flat overcast daylight, unsmiling"
+  }
+ ],
+ "_two_stage": "ДВЕ СТУПЕНИ, И ЭТО ГЛАВНОЕ УСТРОЙСТВО СБОРКИ. Ручка сходства ref_boost на рабочем значении 8.0 тянет к референсу не только внешность, но и ПОЗУ: кадр сползает к фронтальному нейтральному лицу базы, что бы ни было написано в указании — и датасет выходит из тридцати шести одинаковых портретов. Нода эдита разводит это сама: у неё ДВА референса, «сцена» и «субъект», в том порядке, в каком обучена лора. Сценой поэтому идёт ПОДЛОЖКА — обычный t2i-кадр женщины того же возраста в нужной позе, свете и настроении, без единого слова о внешности нашего человека (plate_base ниже). Лицо приезжает вторым референсом, и ref_boost тянет только его. Подложка расходная: живёт один прогон и в датасет не попадает.",
+ "plate_base": "a candid photograph of a woman in her early fifties, natural unretouched skin with visible pores, fine lines at the outer corners of her eyes, softer skin on the neck, shot on a full-frame camera, not a render, not an illustration",
+ "_wrist_cells": "ТРИ КЛЕТКИ ПОД ТАТУ, И ОНИ ЕДИНСТВЕННЫЕ С tattoo_visible. Надпись набита на тыльной стороне левого запястья, и просить её словами бесполезно — вклеивается композит. Но композиту нужна ПЛОЩАДКА, и вот её клетка и заказывает: тыльная сторона левой кисти к объективу, предплечье открыто, рукав выше локтя. Формулировка «BACK of that hand» капслоком в W01 не украшение: при cfg 1.0 негатива нет, и сторона держится только положительным требованием. Запрет металла на этой руке добавляет уже prompts.py из tattoo.prompt_clause — он один для всех таких клеток. ПРОСЬБА НЕ РАВНА РЕЗУЛЬТАТУ: вклеит ли конвейер тату, решает замер кадра (metrics/wrist.py), а не этот ключ. На прежней сдаче просьба и результат разошлись на всех пяти кадрах. РАЗРЕШЕНИЕ У ЭТИХ КЛЕТОК ВЫШЕ ОСТАЛЬНЫХ, И ЭТО НЕ ПРИХОТЬ. Надпись — физический объект в 75 мм, её длина в кадре считается от межзрачкового расстояния (1.19 IPD), а читается она только начиная со 153 px по замеру самого ассета. На 1024 по ширине кадра выходит 143 px — впритык ниже порога, и конвейер честно отказывался вклеивать. На 1280 выходит около 180 px, ровно там, где вклейка уже проверена глазами. ВТОРАЯ РЕДАКЦИЯ ПРОМПТОВ: У ВТОРОЙ РУКИ ТЕПЕРЬ СВОЁ ДЕЛО. Слово «left» диффузия читает плохо — на прогоне модель дважды из двух подняла к волосам ПРАВУЮ руку, и метрика честно отказала («в кадре правая — модель взяла не ту руку»). Приём: занять вторую руку конкретным предметом (кружка, очки, ладонь на столе), тогда свободной остаётся нужная. Плюс «LEFT» капслоком: при cfg 1.0 негатива нет, и сторона держится только весом положительного требования. W02 переписан ближе (chest up, рука на переднем плане у объектива): там надпись не дотягивала до порога читаемости трёх пикселей, а размер считается от межзрачкового — крупнее лицо, крупнее и тату.",
+ "_axes_added": "ТРИ ОСИ ДОБАВЛЕНЫ ПО ЗАМЕЧАНИЮ ЗАКАЗЧИКА: «не хватает интересных ракурсов и поз, разных камер и движений». Прежняя сетка была вежливой — свет менялся двенадцатью состояниями, а КАМЕРА ВО ВСЕХ ТРИДЦАТИ ШЕСТИ КЛЕТКАХ СТОЯЛА ОДНА И ТА ЖЕ (полный кадр, светосильный фикс, уровень глаз), движения не было вовсе, а «ракурс» означал поворот головы, а не точку съёмки.\nЧТО ЭТО МЕНЯЕТ В ЗАМЕРЕ, И ЭТО НАДО ПРОВЕРИТЬ, А НЕ ПРЕДПОЛОЖИТЬ. Широкий угол вплотную (K01) физически искажает лицо; смаз (M01, M02, M05, M08) съедает детали; камера наблюдения (K07) роняет разрешение лица; макро-кроп (K08) может не дать разметке ни рук, ни фигуры. Все они бьют по косинусу и по детекторам рисованности, и часть новых клеток будет честно вылетать в брак. Это не повод их убирать: набор из одинаково снятых кадров — сам по себе признак генерации, и ради разнообразия стоит потерять долю выхода. Долю надо замерить первым же прогоном и записать сюда числом, а не оценкой.\nКАМЕРА ЗАДАЁТСЯ В КЛЕТКЕ, А НЕ В КАРТОЧКЕ: camera_default описывает съёмку по умолчанию, и клетки K её намеренно перебивают. Карточка при этом не меняется — оптика это свойство кадра, а не человека."
+}

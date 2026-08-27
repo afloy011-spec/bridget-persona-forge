@@ -1,0 +1,226 @@
+{
+  "_": "Базовый t2i Krea 2 + управление кадром по глубине. Собран scripts/control.attach_control поверх krea2_t2i_api.json — тот же граф плюс узлы 25-29. Держится здесь для того, чтобы схему можно было открыть в ComfyUI и посмотреть глазами; конвейер строит её кодом, а tests/test_control.py следит, чтобы файл и код не разошлись.",
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "krea2_turbo_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "20": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "krea2_realism_lora.safetensors",
+      "strength_model": 0.65,
+      "model": [
+        "1",
+        0
+      ]
+    }
+  },
+  "21": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "RealisticSnapshotKrea2.safetensors",
+      "strength_model": 0.45,
+      "model": [
+        "20",
+        0
+      ]
+    }
+  },
+  "22": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "purelens_krea2.safetensors",
+      "strength_model": 0.9,
+      "model": [
+        "21",
+        0
+      ]
+    }
+  },
+  "23": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "k2_amateur_slider.safetensors",
+      "strength_model": 0.35,
+      "model": [
+        "22",
+        0
+      ]
+    }
+  },
+  "24": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "k2_disposable_camera.safetensors",
+      "strength_model": 0.0,
+      "model": [
+        "23",
+        0
+      ]
+    }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+      "type": "krea2",
+      "device": "default"
+    }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "PLACEHOLDER PROMPT",
+      "clip": [
+        "2",
+        0
+      ]
+    }
+  },
+  "5": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": {
+      "conditioning": [
+        "4",
+        0
+      ]
+    }
+  },
+  "6": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 1152,
+      "height": 1440,
+      "batch_size": 1
+    }
+  },
+  "7": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 1,
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0,
+      "model": [
+        "29",
+        0
+      ],
+      "positive": [
+        "4",
+        0
+      ],
+      "negative": [
+        "5",
+        0
+      ],
+      "latent_image": [
+        "6",
+        0
+      ]
+    }
+  },
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "7",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "persona-forge/frame",
+      "images": [
+        "8",
+        0
+      ]
+    }
+  },
+  "25": {
+    "_": "Опора. Значение image — то, что вернула comfy_client.upload: <подпапка>/<файл>. Любой снимок, а не готовая карта глубины.",
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "PLACEHOLDER CONTROL IMAGE"
+    }
+  },
+  "26": {
+    "_": "Карта глубины считается ЗДЕСЬ, в графе. Отдельным шагом снаружи она стала бы вторым артефактом, который надо хранить и не рассинхронизировать с опорой.",
+    "class_type": "DepthAnythingV2Preprocessor",
+    "inputs": {
+      "image": [
+        "25",
+        0
+      ],
+      "ckpt_name": "depth_anything_v2_vitl.pth",
+      "resolution": 1024
+    }
+  },
+  "27": {
+    "_": "resize=match_latent_size и вход latent от узла 6: латент опоры обязан совпасть по форме с латентом кадра, иначе Apply складывает тензоры разной формы. normalize/invert не трогать — они переворачивают смысл «ближе светлее».",
+    "class_type": "Krea2ControlImageEncode",
+    "inputs": {
+      "control_image": [
+        "26",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ],
+      "latent": [
+        "6",
+        0
+      ],
+      "resize": "match_latent_size",
+      "upscale_method": "lanczos",
+      "crop": "center",
+      "channel_mode": "rgb",
+      "normalize": "none",
+      "invert": false,
+      "batch_mode": "independent_images"
+    }
+  },
+  "28": {
+    "_": "Krea 2 — своя архитектура: контроль это ЛОРА на модель, а не ControlNetApply на conditioning. Публично существует только depth.",
+    "class_type": "Krea2ControlLoRALoader",
+    "inputs": {
+      "model": [
+        "24",
+        0
+      ],
+      "lora_name": "krea2-depth-control-lora.safetensors",
+      "strength": 1.0
+    }
+  },
+  "29": {
+    "_": "Хвост цепочки модели. Сэмплер (узел 7) цепляется сюда — иначе весь блок в графе есть, а на кадр не влияет.",
+    "class_type": "Krea2ControlApply",
+    "inputs": {
+      "model": [
+        "28",
+        0
+      ],
+      "control_latent": [
+        "27",
+        0
+      ]
+    }
+  }
+}
